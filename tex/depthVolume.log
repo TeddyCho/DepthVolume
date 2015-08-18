@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  17 AUG 2015 11:01
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  17 AUG 2015 23:39
 entering extended mode
 **C:/Users/tcho/Documents/GitHub/DepthVolume/tex/depthVolume.tex
 (C:/Users/tcho/Documents/GitHub/DepthVolume/tex/depthVolume.tex
@@ -119,57 +119,62 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 17--18
+Underfull \hbox (badness 10000) in paragraph at lines 17--19
 
  []
 
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 98--99
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 102--103
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 103--105
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 105--107
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--114
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
-<./../output/scatter.png, id=23, 672.01062pt x 429.605pt>
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 152--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--156
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--163
+
+ []
+
+<./../output/scatter.png, id=26, 672.01062pt x 429.605pt>
 File: ./../output/scatter.png Graphic file (type png)
 
 <use ./../output/scatter.png>
-Package pdftex.def Info: ./../output/scatter.png used on input line 118.
+Package pdftex.def Info: ./../output/scatter.png used on input line 167.
 (pdftex.def)             Requested size: 341.43306pt x 218.26968pt.
 
-<./../output/scatterLog.png, id=24, 662.97687pt x 428.09938pt>
+<./../output/scatterLog.png, id=27, 662.97687pt x 428.09938pt>
 File: ./../output/scatterLog.png Graphic file (type png)
 
 <use ./../output/scatterLog.png>
-Package pdftex.def Info: ./../output/scatterLog.png used on input line 123.
+Package pdftex.def Info: ./../output/scatterLog.png used on input line 172.
 (pdftex.def)             Requested size: 341.43306pt x 220.47037pt.
- [4] [5 <C:/Users/tcho/Documents/GitHub/DepthVolume/output/scatter.png> <C:/Use
+ [5] [6 <C:/Users/tcho/Documents/GitHub/DepthVolume/output/scatter.png> <C:/Use
 rs/tcho/Documents/GitHub/DepthVolume/output/scatterLog.png>] (C:\Users\tcho\Doc
 uments\GitHub\DepthVolume\tex\depthVolume.aux) ) 
 Here is how much of TeX's memory you used:
  1202 strings out of 493921
  15951 string characters out of 3147286
- 72321 words of memory out of 3000000
+ 73321 words of memory out of 3000000
  4530 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -187,9 +192,9 @@ onts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
 m/cmsy7.pfb>
-Output written on depthVolume.pdf (5 pages, 374718 bytes).
+Output written on depthVolume.pdf (6 pages, 379377 bytes).
 PDF statistics:
- 72 PDF objects out of 1000 (max. 8388607)
+ 75 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -15,8 +15,9 @@ Our data cover all trades for a sample of symbols\footnote{Our sample of symbols
 
 \subsection{Trades Data}
 The trading data is organized as a sequential collection of trades, where a trade is defined as a transaction with a unique trade sequence number. A trade must be between no more than two parties, in one symbol, at one price, on one exchange, at one time.\\
+Since we filter out some special cases (trade corrections, duplicates, etc.), we will not go into that here.\footnote{www.nyxdata.com/doc/224904}\\
 
-\subsubsection{Alice Trades Against One Counterparty}
+\subsubsection{Trades Against One Counterparty}
 Alice buys 50 shares of GOOG for \$700 on NASDAQ at 11:00 against a corresponding quote of at least 50 shares. The trades data would show the following:
 \begin{center}
   \begin{tabular}{| c | c | c | c | c |}
@@ -26,7 +27,7 @@ Alice buys 50 shares of GOOG for \$700 on NASDAQ at 11:00 against a correspondin
     \hline
   \end{tabular}
 \end{center}
-\subsubsection{Alice Trades Against Multiple Counterparties}
+\subsubsection{Trades Against Multiple Counterparties}
 Alice sells 50 shares of GOOG for \$700 on NASDAQ at 11:00, but the first-in-line quote is only big enough for 10 shares. The next two quotes, however, are of size 6 an 80, respectively, and so Alica can be accommodated by these three quotes. The trades data would show the following:
 \begin{center}
   \begin{tabular}{| c | c | c | c | c |}
@@ -38,7 +39,7 @@ Alice sells 50 shares of GOOG for \$700 on NASDAQ at 11:00, but the first-in-lin
     \hline
   \end{tabular}
 \end{center}
-\subsubsection{Alice Trades On Multiple Exchanges}
+\subsubsection{Trades On Multiple Exchanges}
 Alice sends a buy order 20 shares of GOOG for \$700 on NASDAQ and a buy order 30 shares of GOOG for \$700 on NYSE. Furthermore, the first-in-line quote on NYSE is only big enough for 1 share, but the next quote in the NYSE queue is for 100 shares. The trades data would show the following:
 \begin{center}
   \begin{tabular}{| c | c | c | c | c |}
@@ -50,7 +51,7 @@ Alice sends a buy order 20 shares of GOOG for \$700 on NASDAQ and a buy order 30
     \hline
   \end{tabular}
 \end{center}
-\subsubsection{Alice Trades At Multiple Prices}
+\subsubsection{Trades At Multiple Prices}
 Alice sends a market buy order for 50 shares of GOOG on BATS BYX. The first-in-line quote is to sell 3 shares at \$700, and the next quote in the queue is for 16 shares at \$700.01. The next quote is for 19 shares at \$700.01, and the following quote is for 60 shares at \$700.03. The trades data would show the following:
 \begin{center}
   \begin{tabular}{| c | c | c | c | c |}
@@ -63,8 +64,8 @@ Alice sends a market buy order for 50 shares of GOOG on BATS BYX. The first-in-l
     \hline
   \end{tabular}
 \end{center}
-\subsubsection{Alice's Order Gets Routed}
-Alice sends a market sell order for 50 shares of GOOG on BATS BYX. The first-in-line quote is to buy 5 shares at \$700, and the next quote in the queue is for 60 shares at \$699.98. However, NASDAQ is the national best bid with a size of 1 share at \$699.99. By Reg NMS, Alice's sell order gets routed to NASDAQ and she sells 1 share for \$699.99. Now, the national best bid is the 10 shares at \$699.98 on BATS BYX. Alice's order transacts her remaining 44 shares against the 60 share bid on BATS BYX. The trades data would show the following:
+\subsubsection{Order Gets Routed}
+Alice sends a market sell order for 50 shares of GOOG on BATS BYX. The first-in-line quote is to buy 5 shares at \$700, and the next quote in the queue is for 60 shares at \$699.98. However, NASDAQ is the national best bid with a size of 1 share at \$699.99. By Reg NMS, Alice's sell order gets routed to NASDAQ and she sells 1 share for \$699.99. Now, the national best bid is the 60 shares at \$699.98 on BATS BYX. Alice's order transacts her remaining 44 shares against the 60 share bid on BATS BYX. The trades data would show the following:
 \begin{center}
   \begin{tabular}{| c | c | c | c | c |}
     \hline
@@ -88,8 +89,56 @@ Alice buys 40 shares of GOOG for \$700 on BATS BYX at 11:00:00 against two order
   \end{tabular}
 \end{center}
 
-Since we filter out some special cases (trade corrections, duplicates, etc.), we will not go into that here.
-\footnote{www.nyxdata.com/doc/224904}
+\subsection{Quotes Data}
+The quotes data is organized as a sequential collection of quote updates, which only occur when the best bid/offer (BBO) has changed. These changes could be the result of a trade, a quote addition, a quote retraction, or a quote modification.\\
+The following scenarios are all for one symbol on one exchange, as their quotes data are independent of one another.\\
+
+\subsubsection{Nothing Happens}
+The market opens at 09:30 with a \$9.99 bid for 30 shares and a \$10.03 bid for 15 shares. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Improved Quotes}
+The market opens at 09:30 with a \$9.99 bid for 30 shares and a \$10.03 bid for 15 shares. At 09:44:00, a new \$10.00 bid for 2 shares enters the market. At 10:20:00, a new \$10.02 offer for 30 shares enters the market. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:44:00 & 2 & \$10.00 & \$10.03 & 15 \\ \hline
+    10:20:00 & 2 & \$10.00 & \$10.02 & 30 \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Joined Quotes}
+The market opens at 09:30 with a \$9.99 bid for 30 shares and a \$10.03 bid for 15 shares. At 09:48:00, a new \$9.99 bid for 20 shares enters the market, joining the existing bid for 30 shares. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:48:00 & 50 & \$9.99 & \$10.03 & 15 \\ 
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Retracted (or Traded) Quotes}
+The market opens at 09:30 with two \$9.99 bids for 10 and 20 shares, respectively, and a \$10.03 bid for 15 shares. At 09:33:00, the \$9.99 bid for 10 shares is retracted (or traded). At 09:34:00, the \$9.99 bid for 20 shares is retracted (or traded), and now the previously existing \$9.98 bid for 100 shares is the new best bid. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:33:00 & 20 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:34:00 & 100 & \$9.98 & \$10.03 & 15 \\
+    \hline
+  \end{tabular}
+\end{center}
+
 
 \section{Transforming Data}
 Each data point concerned a specific symbol $i$'s activity on a specific exchange $j$ for a specific date $t$.
