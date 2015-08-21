@@ -1,5 +1,10 @@
 library(ggplot2)
+library(plyr)
 library(rCharts)
+library(googleVis)
+library(RJSONIO)
+
+
 mapSymbolToColor <- function(aSymbol){
   mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
   myColors = c("red", "orange", "yellow", "green", "blue", "purple", "black", "brown")
@@ -20,23 +25,14 @@ createScatterDV <- function(aData, aX, aY, aFile){
   return(d1)
 }
 filterFromDepthVolume <- function(mySeries){
-  theFilteredSeries = mySeries[mySeries$exchange !="FINRA" & !is.nan(mySeries$depth) &
-                                mySeries$depth != 0,]
+  theFilteredSeries = mySeries[mySeries$Exchange !="FINRA" &
+                                 !is.na(mySeries$AverageDepth) & mySeries$AverageDepth != 0 &
+                                 !is.na(mySeries$Volume & mySeries$Volume != 0),]
   return(theFilteredSeries)
 }
-deriveDepthVolumeColumns <- function(myFilteredSeries){
-  myFilteredSeries$logDepth = log(myFilteredSeries$depth)
-  myFilteredSeries$logVolume = log(myFilteredSeries$volume)
-  myFilteredSeries$dollarDepth = myFilteredSeries$depth * myFilteredSeries$bookPrice
-  myFilteredSeries$dollarVolume = myFilteredSeries$volume * myFilteredSeries$tradePrice
-  myFilteredSeries$logDollarDepth = log(myFilteredSeries$dollarDepth)
-  myFilteredSeries$logDollarVolume = log(myFilteredSeries$dollarVolume)
-  return(myFilteredSeries)
-}
-
-readDepthVolumeData <- function(mySymbols, aNum){
+readDepthVolumeData <- function(mySymbols){
   for(sym in mySymbols){
-    myData <- read.csv(paste(getwd(), "\\Github\\DepthVolume\\output\\", sym, "tqd",aNum,".csv", sep =""),
+    myData <- read.csv(paste(getwd(), "/Data/depth vs volume/", 'depth2014_', sym,".csv", sep =""),
                        header = TRUE, stringsAsFactors = FALSE)
     if(sym == mySymbols[1]){
       mySeries <- myData
@@ -46,41 +42,52 @@ readDepthVolumeData <- function(mySymbols, aNum){
   }
   return(mySeries)
 }
-setwd("C:/Users/tcho/Documents/")
+enrichDepthVolumeData <- function(aData){
+  colnames(aData) <- c("Date", "Symbol", "Exchange", "AverageDepth", "Volume")
+  code = c("A", "B", "C", "D", "I", "J", "K", "M", "N", "T", "P",
+           "S", "T/Q", "Q", "W", "X", "Y", "Z", "DATE", "X_1", "O")
+  exchange = c("NYSE MKT","NASDAQ BX","NSX", "FINRA", "ISE", "BATS EDGA","BATS EDGX","CHX",
+               "NYSE","NASDAQ T","NYSE Arca","Consolidated Tape System","NASDAQ TQ", "NASDAQ Q", 
+               "CBSX", "NASDAQ PSX", "BATS BYX", "BATS BZX", "DATE", "UNKNOWN_X_1", "UNKNOWN_O")
+  aData$Exchange <- mapvalues(aData$Exchange, from = code, to = exchange)
+  aData$ExchangeSymbol = paste0(aData$Exchange, ": ", aData$Symbol)
+  
+  aData$Date <- as.Date(sapply(aData$Date, function(x) toString(x)), format="%Y%m%d")
+  return(aData)
+}
+
+setwd("C:/Users/tcho/Dropbox/Project - Platform Competition/")
 mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
-num = 6
-mySeries <-readDepthVolumeData(mySymbols, num)
 
-myFilteredSeries <- filterFromDepthVolume(mySeries)
-theSeries <- deriveDepthVolumeColumns(myFilteredSeries)
+mySeries <-readDepthVolumeData(mySymbols)
+mySeries <- enrichDepthVolumeData(mySeries)
+theSeries <- filterFromDepthVolume(mySeries)
 
-d1=createScatterDV(theSeries, "depth", "volume",
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\perDayScatter.html', sep=""))
-d2=createScatterDV(theSeries, "logDepth", "logVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\perDayScatterLog.html', sep=""))
-d3=createScatterDV(theSeries, "dollarDepth", "dollarVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\perDayScatterDollar.html', sep=""))
-d4=createScatterDV(theSeries, "logDollarDepth", "logDollarVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\perDayScatterDollarLog.html', sep=""))
+
+myState <- '
+{"yLambda":0,"xLambda":0,"showTrails":false,"playDuration":30000,
+"sizeOption":"5", "colorOption":"3",
+"iconKeySettings":[{"key":{"dim0":"NYSE: C"}},
+{"key":{"dim0":"CHX: JBLU"}},
+{"key":{"dim0":"NYSE Arca: BAC"}}]}
+'
+M <- gvisMotionChart(theSeries, idvar="ExchangeSymbol", timevar="Date",
+                     xvar="AverageDepth", yvar="Volume",
+                     options=list(width=1200, height=500, state=myState),
+                     chartid="DepthVolume")
+plot(M)
+
+
 
 myAveragedSeries <- aggregate(cbind(depth, volume, dollarDepth, dollarVolume) ~ symbol + exchange, FUN = mean, data=theSeries)
 myAveragedSeries$logDepth = log(myAveragedSeries$depth)
 myAveragedSeries$logVolume = log(myAveragedSeries$volume)
 myAveragedSeries$logDollarDepth = log(myAveragedSeries$dollarDepth)
 myAveragedSeries$logDollarVolume = log(myAveragedSeries$dollarVolume)
-d5=createScatterDV(myAveragedSeries, "depth", "volume",
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\scatter.html', sep=""))
 d6=createScatterDV(myAveragedSeries, "logDepth", "logVolume", 
                   paste(getwd(),'\\Github\\DepthVolume\\output\\scatterLog.html', sep=""))
-d7=createScatterDV(myAveragedSeries, "dollarDepth", "dollarVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollar.html', sep=""))
 d8=createScatterDV(myAveragedSeries, "logDollarDepth", "logDollarVolume", 
                    paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollarLog.html', sep=""))
-
-d8=createScatterDV(myAveragedSeries, "dollarDepth", "logDollarVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollarNormDepthLogVolume.html', sep=""))
-d8=createScatterDV(myAveragedSeries, "logDollarDepth", "dollarVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollarLogDepthNormVolume.html', sep=""))
 
 
 if(FALSE){
