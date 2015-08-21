@@ -3,8 +3,6 @@ library(plyr)
 library(rCharts)
 library(googleVis)
 library(RJSONIO)
-
-
 mapSymbolToColor <- function(aSymbol){
   mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
   myColors = c("red", "orange", "yellow", "green", "blue", "purple", "black", "brown")
@@ -32,7 +30,7 @@ filterFromDepthVolume <- function(mySeries){
 }
 readDepthVolumeData <- function(mySymbols){
   for(sym in mySymbols){
-    myData <- read.csv(paste(getwd(), "/Data/depth vs volume/", 'depth2014_', sym,".csv", sep =""),
+    myData <- read.csv(paste(getwd(), "/Data/depth vs volume/", 'depth_dollar2014_', sym,".csv", sep =""),
                        header = TRUE, stringsAsFactors = FALSE)
     if(sym == mySymbols[1]){
       mySeries <- myData
@@ -55,57 +53,46 @@ enrichDepthVolumeData <- function(aData){
   aData$Date <- as.Date(sapply(aData$Date, function(x) toString(x)), format="%Y%m%d")
   return(aData)
 }
-
-setwd("C:/Users/tcho/Dropbox/Project - Platform Competition/")
-mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
-
-mySeries <-readDepthVolumeData(mySymbols)
-mySeries <- enrichDepthVolumeData(mySeries)
-theSeries <- filterFromDepthVolume(mySeries)
-
-
-myState <- '
-{"yLambda":0,"xLambda":0,"showTrails":false,"playDuration":30000,
-"sizeOption":"5", "colorOption":"3",
-"iconKeySettings":[{"key":{"dim0":"NYSE: C"}},
-{"key":{"dim0":"CHX: JBLU"}},
-{"key":{"dim0":"NYSE Arca: BAC"}}]}
-'
-M <- gvisMotionChart(theSeries, idvar="ExchangeSymbol", timevar="Date",
-                     xvar="AverageDepth", yvar="Volume",
-                     options=list(width=1200, height=500, state=myState),
-                     chartid="DepthVolume")
-plot(M)
-
-
-
-myAveragedSeries <- aggregate(cbind(depth, volume, dollarDepth, dollarVolume) ~ symbol + exchange, FUN = mean, data=theSeries)
-myAveragedSeries$logDepth = log(myAveragedSeries$depth)
-myAveragedSeries$logVolume = log(myAveragedSeries$volume)
-myAveragedSeries$logDollarDepth = log(myAveragedSeries$dollarDepth)
-myAveragedSeries$logDollarVolume = log(myAveragedSeries$dollarVolume)
-d6=createScatterDV(myAveragedSeries, "logDepth", "logVolume", 
-                  paste(getwd(),'\\Github\\DepthVolume\\output\\scatterLog.html', sep=""))
-d8=createScatterDV(myAveragedSeries, "logDollarDepth", "logDollarVolume", 
-                   paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollarLog.html', sep=""))
-
-
-if(FALSE){
-  mySeries$color = sapply(mySeries$symbol, function(x) mapSymbolToColor(x))
-  plot(myFilteredSeries$depth, myFilteredSeries$volume, col=myFilteredSeries$color)
-  plot(log(myFilteredSeries$depth), log(myFilteredSeries$volume), col=myFilteredSeries$color)
-  legend("topleft", legend=levels(factor(myFilteredSeries$symbol)),
-         text.col=seq_along(levels(factor(myFilteredSeries$color))))
+retrieveGraphInputData <- function(aSymbols){
+  mySeries <-readDepthVolumeData(aSymbols)
+  head(mySeries)
+  mySeries <- enrichDepthVolumeData(mySeries)
+  theSeries <- filterFromDepthVolume(mySeries)
+}
+averageOverSymbolExchange <- function(mySeries){
+  myAveragedSeries <- aggregate(cbind(depth, volume, dollarDepth, dollarVolume) ~ symbol + exchange, FUN = mean, data=theSeries)
+  myAveragedSeries$logDepth = log(myAveragedSeries$depth)
+  myAveragedSeries$logVolume = log(myAveragedSeries$volume)
+  myAveragedSeries$logDollarDepth = log(myAveragedSeries$dollarDepth)
+  myAveragedSeries$logDollarVolume = log(myAveragedSeries$dollarVolume)
+  d6=createScatterDV(myAveragedSeries, "logDepth", "logVolume", 
+                     paste(getwd(),'\\Github\\DepthVolume\\output\\scatterLog.html', sep=""))
+  d8=createScatterDV(myAveragedSeries, "logDollarDepth", "logDollarVolume", 
+                     paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollarLog.html', sep=""))
   
-  sym="AMD"
-  ptm=proc.time()
-  mySeries <- read.csv(paste(getwd(), "\\Github\\DepthVolume\\data\\", sym, "_mar_q.csv", sep =""),
-                       header = TRUE, stringsAsFactors = FALSE)
-  myCols = c("DATE", "TIME_M", "EX", "SYM_ROOT", "BIDSIZ", "ASKSIZ")
-  mySeries = mySeries[,myCols]
+}
+createDancingBubblePlot <- function(aSeries){
+  setwd("C:/Users/tcho/Dropbox/Project - Platform Competition/")
+  mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
+  theSeries <- retrieveGraphInputData(mySymbols)
   
-  
-  d3$save(paste(getwd(),'\\Github\\DepthVolume\\output\\test.html', sep=""), 
-                standalone = TRUE)
-  
-} 
+  myState <- '
+  {"yLambda":0,"xLambda":0,"showTrails":false,"playDuration":30000,
+  "sizeOption":"5", "colorOption":"3",
+  "iconKeySettings":[{"key":{"dim0":"NYSE: C"}},
+  {"key":{"dim0":"CHX: JBLU"}},
+  {"key":{"dim0":"NYSE Arca: BAC"}}]}
+  '
+  M <- gvisMotionChart(theSeries, idvar="ExchangeSymbol", timevar="Date",
+                       xvar="AverageDepth", yvar="Volume",
+                       options=list(width=1200, height=500, state=myState),
+                       chartid="DollarDepthVolume")
+  plot(M)
+  myFileName = paste(getwd(), '/Code/DepthVolume/output/', 'timeChartDollar.html', sep="")
+  print(M, file=myFileName)
+  print(myFileName)
+}
+
+
+
+
