@@ -3,7 +3,7 @@
 \usepackage{float}
 \begin{document}
 
-\title{Depth and Volume} \author{Teddy Cho}
+\title{Depth and Volume}
 
 \maketitle
 \vspace{.5pc}
@@ -11,7 +11,7 @@
 \section{Data}
 We use historical data from the NYSE Trade and Quote database\footnote{We note that this data is known to have inaccuracies regarding quotes' timestamps, and such issues may carry over to trade timestamps. These issues stem from timestamps originating from a secondary source (i.e., not the exchanges' order matching engines) and being derived after an exchange aggregation method which introduces further latency\footnote{See Budish, Cramton and Shim (2015) and Ding, Hanna and Hendershott (2014)}.}, made available by Wharton Research Data Services. The dataset ``contains intraday transactions data (trades and quotes) for all securities listed on the New York Stock Exchange (NYSE), American Stock Exchange (AMEX), as well as Nasdaq National Market System (NMS) and SmallCap issues''\footnote{See https://wrds-web.wharton.upenn.edu/wrds/ds/taq/index.cfm.}.\\
 
-Our data cover all trades for a sample of symbols\footnote{Our sample of symbols consists of AMD, BAC, C, GOOG, GRPN, JBLU, MSFT, and RAD. We would like to include BRKA and BRKB, but millisecond TAQ data does not exist for them. Strange.} over the period of Mar 1, 2014 - Mar 31, 2014. No time filtering is used, and we are left with 20 trading days total.\\
+Our data cover all trades for a sample of symbols\footnote{Our sample of symbols consists of AMD, BAC, C, GOOG, GRPN, JBLU, MSFT, and RAD. We would like to include BRKA and BRKB, but millisecond TAQ data does not exist for them. Strange.} over the period of Jan 1, 2014 - Dec 31, 2014. No time filtering is used, and we are left with a total of 249 trading days.\\
 
 \subsection{Trades Data}
 The trading data is organized as a sequential collection of trades, where a trade is defined as a transaction with a unique trade sequence number. A trade must be between no more than two parties, in one symbol, at one price, on one exchange, at one time.\\
@@ -151,25 +151,62 @@ $$Q_{ijt} = \sum_{q \in ijt} q$$
 We begin by computing the depth of each quote update, indexed by $u$. This is done by taking the size of the best bid $q_{bu}$ and the size of the best ask $q_{au}$ and taking their average $\overline{q_u}$:\\
 $$\overline{q_u} = \frac{q_{bu} + q_{au}}{2}.$$\\
 For each quote update $u$, we compute its duration $\Delta T_u$--that is, how long this quote update $u$ represents the actual state of the book. We do this by subtracting the timestamp $T_u$ of quote update $u$ from the timestamp $T_{u+1}$ of the next quote update $u+1$:\\
-$$\Delta T_u = T_{u+1} - T_u$$.\\
-To summarize the depth $D_{ijt}$ between 10:00 and 15:30 in symbol $i$ on exchange $j$ on date $t$, we take the sum of $\overline{q_u}$ weighted by their corresponding $\Delta T_u$.\\
-$$D_{ijt} = \sum_{u \in ijt} q_u \cdot\Delta T_u$$
+$$\Delta T_u = T_{u+1} - T_u.$$\\
+To summarize the depth $\overline{d}_{ijt}$ between 10:00 and 15:30 in symbol $i$ on exchange $j$ on date $t$, we take the sum of $\overline{q_u}$ weighted by their corresponding $\Delta T_u$.\\
+$$\overline{d}_{ijt} = \sum_{u \in ijt} q_u \cdot\Delta T_u$$
 
 John mentioned how NASDAQ quotes effectively treat its different DMMs as different exchanges; make sure to do special logic for NASDAQ.
 
 \section{Results}
-Due to wide heterogeneity in volumes between symbols, we take the logarithm of both depth and volume. We try\\
-Chicago, National, NASDAQ PSX OMX had negative values for $\log{D_{ijt}}$, which is because. ???????????\\
+Due to wide heterogeneity in volumes between symbols, we take the logarithm of both depth and volume.\\
 
-Graphs are located in Dropbox\footnote{https://www.dropbox.com/sh/9m485w2yvkczkle/AACP6PtrgDxGnU7Vd8I2ofYla?dl=0}.
+We filter out data points with negative values, as this implies empty bids or asks. (Penalizing quotes past the NBBO should solve this problem.)\\
+
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{{./../output/scatter}.png}
+\includegraphics[width=120mm]{{./../output/trends/TimeChartDollarShot}.png}
 \caption{The values of daily depth and volume are plotted against each other across symbols. The colors correspond to different exchanges.}
 \end{figure}
+
+Graphs are located in Dropbox\footnote{https://www.dropbox.com/sh/kxtlz8mb4lzfvgl/AAACcauEobiX21IBCM\_\_6IUja?dl=0}.\\
+
+For each date $t$, we fit the regression model:\\
+$$\log{\overline{d}_{ijt}} = \alpha_t + \beta_{t} \cdot \log{Q_{ijt}} + \epsilon_{ijt}.$$\\
+
+\subsection{$\beta_t$ Over All Exchanges and Symbols}
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{{./../output/scatterLog}.png}
-\caption{The above graph, logged.}
+\includegraphics[width=120mm]{{./../output/trends/AllCoeffsTS}.png}
+\caption{The values of $\beta_t$ over time without regard to exchange or symbol.}
 \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/trends/AllCoeffsHist}.png}
+\caption{Histogram of $\beta_t$ without regard to exchange or symbol.}
+\end{figure}
+
+\subsection{$\beta_t$ Grouped by Exchange}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/trends/ExchangeCoeffsTS}.png}
+\caption{The values of $\beta_t$ over time per exchange.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/trends/ExchangeCoeffsHist}.png}
+\caption{Histogram of $\beta_t$ per exchange.}
+\end{figure}
+\subsection{$\beta_t$ Grouped by Symbol}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/trends/SymbolCoeffsTS}.png}
+\caption{The values of $\beta_t$ over time per symbol.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/trends/SymbolCoeffsHist}.png}
+\caption{Histogram of $\beta_t$ per symbol.}
+\end{figure}
+
 \end{document}

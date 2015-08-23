@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  19 AUG 2015 15:27
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  23 AUG 2015 11:10
 entering extended mode
 **C:/Users/tcho/Dropbox/Project*-*Platform*Competition/Code/DepthVolume/tex/dep
 thVolume.tex
@@ -107,6 +107,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 8.
+
+
+LaTeX Warning: No \author given.
+
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 12.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -154,51 +158,123 @@ Underfull \hbox (badness 10000) in paragraph at lines 154--156
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 161--163
+Underfull \hbox (badness 10000) in paragraph at lines 161--162
 
  []
 
-<./../output/scatter.png, id=26, 672.01062pt x 429.605pt>
-File: ./../output/scatter.png Graphic file (type png)
 
-<use ./../output/scatter.png>
-Package pdftex.def Info: ./../output/scatter.png used on input line 167.
-(pdftex.def)             Requested size: 341.43306pt x 218.26968pt.
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
 
-<./../output/scatterLog.png, id=27, 662.97687pt x 428.09938pt>
-File: ./../output/scatterLog.png Graphic file (type png)
+ []
 
-<use ./../output/scatterLog.png>
-Package pdftex.def Info: ./../output/scatterLog.png used on input line 172.
-(pdftex.def)             Requested size: 341.43306pt x 220.47037pt.
- [5] [6 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/
-output/scatter.png> <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/
-DepthVolume/output/scatterLog.png>]
+
+<./../output/trends/TimeChartDollarShot.png, id=26, 907.89188pt x 379.91937pt>
+File: ./../output/trends/TimeChartDollarShot.png Graphic file (type png)
+
+<use ./../output/trends/TimeChartDollarShot.png>
+Package pdftex.def Info: ./../output/trends/TimeChartDollarShot.png used on inp
+ut line 167.
+(pdftex.def)             Requested size: 341.43306pt x 142.8752pt.
+ [5]
+Underfull \hbox (badness 10000) in paragraph at lines 171--172
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+
+ []
+
+<./../output/trends/AllCoeffsTS.png, id=31, 620.0766pt x 722.7pt>
+File: ./../output/trends/AllCoeffsTS.png Graphic file (type png)
+
+<use ./../output/trends/AllCoeffsTS.png>
+Package pdftex.def Info: ./../output/trends/AllCoeffsTS.png used on input line 
+179.
+(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+
+<./../output/trends/AllCoeffsHist.png, id=32, 620.0766pt x 722.7pt>
+File: ./../output/trends/AllCoeffsHist.png Graphic file (type png)
+
+<use ./../output/trends/AllCoeffsHist.png>
+Package pdftex.def Info: ./../output/trends/AllCoeffsHist.png used on input lin
+e 184.
+(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+ [6 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/trends/TimeChartDollarShot.png>]
+[7 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
+t/trends/AllCoeffsTS.png>]
+<./../output/trends/ExchangeCoeffsTS.png, id=43, 620.0766pt x 722.7pt>
+File: ./../output/trends/ExchangeCoeffsTS.png Graphic file (type png)
+
+<use ./../output/trends/ExchangeCoeffsTS.png>
+Package pdftex.def Info: ./../output/trends/ExchangeCoeffsTS.png used on input 
+line 191.
+(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+
+<./../output/trends/ExchangeCoeffsHist.png, id=44, 620.0766pt x 722.7pt>
+File: ./../output/trends/ExchangeCoeffsHist.png Graphic file (type png)
+
+<use ./../output/trends/ExchangeCoeffsHist.png>
+Package pdftex.def Info: ./../output/trends/ExchangeCoeffsHist.png used on inpu
+t line 196.
+(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+ [8 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/trends/AllCoeffsHist.png>]
+[9 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
+t/trends/ExchangeCoeffsTS.png>]
+<./../output/trends/SymbolCoeffsTS.png, id=53, 620.0766pt x 722.7pt>
+File: ./../output/trends/SymbolCoeffsTS.png Graphic file (type png)
+
+<use ./../output/trends/SymbolCoeffsTS.png>
+Package pdftex.def Info: ./../output/trends/SymbolCoeffsTS.png used on input li
+ne 203.
+(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+
+<./../output/trends/SymbolCoeffsHist.png, id=54, 620.0766pt x 722.7pt>
+File: ./../output/trends/SymbolCoeffsHist.png Graphic file (type png)
+
+<use ./../output/trends/SymbolCoeffsHist.png>
+Package pdftex.def Info: ./../output/trends/SymbolCoeffsHist.png used on input 
+line 208.
+(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+ [10 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/trends/ExchangeCoeffsHist.png>] [11 <C:/Users/tcho/Dropbox/Project - Platfo
+rm Competition/Code/DepthVolume/output/trends/SymbolCoeffsTS.png>] [12 <C:/User
+s/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/output/trends/Sy
+mbolCoeffsHist.png>]
 ("C:\Users\tcho\Dropbox\Project - Platform Competition\Code\DepthVolume\tex\dep
 thVolume.aux") ) 
 Here is how much of TeX's memory you used:
- 1202 strings out of 493921
- 16140 string characters out of 3147286
+ 1228 strings out of 493921
+ 17246 string characters out of 3147286
  73321 words of memory out of 3000000
- 4530 multiletter control sequences out of 15000+200000
+ 4551 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,10n,19p,970b,215s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,10n,19p,970b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Prog
 ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-r7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program
- Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on depthVolume.pdf (6 pages, 379434 bytes).
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on depthVolume.pdf (12 pages, 702624 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
+ 114 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
