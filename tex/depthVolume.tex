@@ -148,9 +148,18 @@ Volume $Q_{ijt}$ is computed as the sum of the volumes $q$ of trades occurring b
 $$Q_{ijt} = \sum_{q \in ijt} q$$
 
 \subsection{Depth}
-We begin by computing the depth of each quote update, indexed by $u$. This is done by taking the size of the best bid $q_{bu}$ and the size of the best ask $q_{au}$ and taking their average $\overline{q_u}$:\\
+We begin by computing the depth of each quote update, indexed by $u$. We used two different methods.
+
+\subsubsection{Average Method}
+This method measures the quote update's depth $\overline{q_u}$ as the average of the size of the best bid $q_{bu}$ and the size of the best ask $q_{au}$:\\
 $$\overline{q_u} = \frac{q_{bu} + q_{au}}{2}.$$\\
-For each quote update $u$, we compute its duration $\Delta T_u$--that is, how long this quote update $u$ represents the actual state of the book. We do this by subtracting the timestamp $T_u$ of quote update $u$ from the timestamp $T_{u+1}$ of the next quote update $u+1$:\\
+
+\subsubsection{Min Method}
+This method measures the quote update's depth $\overline{q_u}$ as the minimum between the size of the best bid size$q_{bu}$ and the size of the best ask $q_{au}$:\\
+$$\overline{q_u} = \min({q_{bu}, q_{au}}).$$\\
+
+\subsubsection{Combining All $\overline{q_u}$ Into One Measure}
+For each quote update $u$, we compute its duration $\Delta T_u$--that is, how long this quote update $u$ represents the state of the book. We do this by subtracting the timestamp $T_u$ of quote update $u$ from the timestamp $T_{u+1}$ of the next quote update $u+1$:\\
 $$\Delta T_u = T_{u+1} - T_u.$$\\
 To summarize the depth $\overline{d}_{ijt}$ between 10:00 and 15:30 in symbol $i$ on exchange $j$ on date $t$, we take the sum of $\overline{q_u}$ weighted by their corresponding $\Delta T_u$.\\
 $$\overline{d}_{ijt} = \sum_{u \in ijt} q_u \cdot\Delta T_u$$
@@ -160,7 +169,7 @@ John mentioned how NASDAQ quotes effectively treat its different DMMs as differe
 \section{Results}
 Due to wide heterogeneity in volumes between symbols, we take the logarithm of both depth and volume.\\
 
-We filter out data points with negative values, as this implies empty bids or asks. (Penalizing quotes past the NBBO should solve this problem.)\\
+We filter out data points with 0 depth, as this implies empty bids or asks. (Penalizing quotes past the NBBO should solve this problem.)\\
 
 \begin{figure}[H]
 \centering
@@ -170,43 +179,109 @@ We filter out data points with negative values, as this implies empty bids or as
 
 Graphs are located in Dropbox\footnote{https://www.dropbox.com/sh/kxtlz8mb4lzfvgl/AAACcauEobiX21IBCM\_\_6IUja?dl=0}.\\
 
-For each date $t$, we fit the regression model:\\
-$$\log{\overline{d}_{ijt}} = \alpha_t + \beta_{t} \cdot \log{Q_{ijt}} + \epsilon_{ijt}.$$\\
+From plotting the different symbols together, we observed that the depth v. volume relationship appeared to be segmented by symbol. Thus, the following analyses separates symbol.\\
 
-\subsection{$\beta_t$ Over All Exchanges and Symbols}
-\begin{figure}[H]
-\centering
-\includegraphics[width=120mm]{{./../output/trends/AllCoeffsTS}.png}
-\caption{The values of $\beta_t$ over time without regard to exchange or symbol.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=120mm]{{./../output/trends/AllCoeffsHist}.png}
-\caption{Histogram of $\beta_t$ without regard to exchange or symbol.}
-\end{figure}
+For each date $t$ and symbol $i$, we fit the regression model:\\
+$$\log{\overline{d}_{ijt}} = \alpha_{it} + \beta_{it} \cdot \log{Q_{ijt}} + \epsilon_{ijt}.$$\\
 
-\subsection{$\beta_t$ Grouped by Exchange}
-\begin{figure}[H]
-\centering
-\includegraphics[width=120mm]{{./../output/trends/ExchangeCoeffsTS}.png}
-\caption{The values of $\beta_t$ over time per exchange.}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=120mm]{{./../output/trends/ExchangeCoeffsHist}.png}
-\caption{Histogram of $\beta_t$ per exchange.}
-\end{figure}
-\subsection{$\beta_t$ Grouped by Symbol}
+We ran the above regressions for all 4 combinations of:
+\begin{itemize}
+\item Min or Average method of measuring depth
+\item Filtering or Unfiltering the four small exchanges (CBSX, CHX, NSX, NASDAQ PSX), as they account for less than \%5 of total volume.
+\end{itemize}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{{./../output/trends/SymbolCoeffsTS}.png}
-\caption{The values of $\beta_t$ over time per symbol.}
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/BetaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/BetaLines}.png}
+\caption{Unfiltered dataset.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{{./../output/trends/SymbolCoeffsHist}.png}
-\caption{Histogram of $\beta_t$ per symbol.}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Avg/BetaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Avg/BetaLines}.png}
+\caption{Filtered dataset (excluded CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}
+
+\subsection{Curious Behavior}
+\subsubsection{Low Depth and High Volume in CHX}
+We investigate the CHX points which occur in the top right region (low depth, high volume).
+
+For one such outlier, BAC on CHX on 10-Jan-2014, we open the individual trades:
+[[TRADE DATA OF ALL CHX TRADES IN BAC ON JAN 10]]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/bacmsftjancount}.png}
+\includegraphics[width=60mm]{{./../output/bacmsftjan}.png}
+\caption{In January, although trades with condition code 4 constituted less than 15\% of the trades, over 95\% of volume held this condition code.}
+\end{figure}
+
+
+Most interestingly, we observe two large trades with condition code 4, indicating "Derivatively Priced" trades. Online literature suggests that activity in Exchange Traded Products\footnote{http://www.investopedia.com/terms/e/exchange-traded-products-etp.asp} largely make up these trades, perhaps when different symbols are negotiated at a package price and the individual trades semi-arbitrarily take on parts of the cost.
+
+The fact that such trades are not considered to be a true "Last Sale''\footnote{http://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/utdfspecification.pdf} and are allowed outside of limit-up and limit-down prices\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands} strongly indicates that these trades' prices are not dictated by the BBO.
+
+As a response, all trades with condition code 4 were filtered out.
+
+\subsubsection{Flat Relationship of Volume v. Depth for BAC}
+This flat relationship could be attributable to the CHX outlier which hovered in the low-depth/high-volume region. Filtering out Derivatively Priced trades remedied this flatness.
+
+\subsubsection{GOOG: Different Volumes for Similar Depths}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/filtered/Avg/GOOG/36}.png}
+\caption{A sample date in GOOG exhibiting both low variability in depth, and BATS EDGA and BATS BYX pushing the regression line to a negative slope.}
+\end{figure}
+
+First we address the low variability in depth.\\
+
+Normally, a symbol will have a quote history like where spreads are mostly one tick wide, and exchanges have similar BBOs. Because of this, the differences between exchanges' depths are largely dictated by the size shown on the bid and offer.\\\\
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ & BID & OFR & OFRSIZ \\ \hline
+2014-01-27 10:44:37 & JBLU & T & 43 & 8.64 & 8.65 & 42 \\ \hline
+2014-01-27 10:44:37 & JBLU & B & 11 & 8.64 & 8.65 & 12 \\ \hline
+2014-01-27 10:44:37 & JBLU & P & 11 & 8.64 & 8.65 & 23 \\ \hline
+2014-01-27 10:44:37 & JBLU & Y & 3 & 8.64 & 8.65 & 5 \\ \hline
+2014-01-27 10:44:37 & JBLU & Y & 3 & 8.64 & 8.65 & 4 \\ \hline
+2014-01-27 10:44:37 & JBLU & A & 1 & 8.64 & 8.66 & 1 \\ \hline
+2014-01-27 10:44:37 & JBLU & A & 1 & 8.64 & 8.66 & 1 \\ \hline
+2014-01-27 10:44:37 & JBLU & X & 2 & 8.63 & 8.65 & 1 \\ \hline
+2014-01-27 10:44:37 & JBLU & Y & 3 & 8.64 & 8.65 & 3 \\ \hline
+2014-01-27 10:44:37 & JBLU & P & 11 & 8.64 & 8.65 & 18 \\ \hline
+2014-01-27 10:44:37 & JBLU & C & 5 & 8.63 & 8.65 & 2 \\ \hline
+2014-01-27 10:44:37 & JBLU & C & 5 & 8.63 & 8.65 & 1 \\
+\hline
+\end{tabular}\\
+
+
+On the other hand, GOOG's quote behavior is comprised of multiple tick-wide spreads, and there is much heterogeneity in the exchanges' BBOs. Because of this, the differences between exchanges' depths are not sufficiently captured by our current measure, since our measure does not take into account spread.\\
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ & BID & OFR & OFRSIZ \\ \hline
+2014-01-27 10:00:16 & GOOG & X & 1 & 1109.12 & 1114.25 & 1 \\ \hline
+2014-01-27 10:00:16 & GOOG & Y & 1 & 1110.9 & 1112.47 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & T & 2 & 1110.9 & 1113.35 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & P & 4 & 1110.21 & 1113.26 & 4 \\ \hline
+2014-01-27 10:00:17 & GOOG & Y & 1 & 1110.9 & 1113.27 & 6 \\ \hline
+2014-01-27 10:00:17 & GOOG & Y & 1 & 1110.9 & 1113.27 & 3 \\ \hline
+2014-01-27 10:00:17 & GOOG & Y & 1 & 1110.9 & 1159.74 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & K & 1 & 1110.9 & 1116.03 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & J & 3 & 1110.4 & 1159.74 & 1 \\ 
+\hline
+\end{tabular}\\
+
+Commission full year of:
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/bidSizebyx}.png}
+\caption{Histogram of bid size, note the bump in BYX being at 7. Why?}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/spreadsByxhilite}.png}
+\caption{Histogram of spread, note large spread in BYX around 40. BYX has higher spreads. See if bump only happens on certain days or is always hinted at by data.}
 \end{figure}
 
 \end{document}

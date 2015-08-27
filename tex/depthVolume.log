@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  23 AUG 2015 11:10
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  27 AUG 2015 08:57
 entering extended mode
 **C:/Users/tcho/Dropbox/Project*-*Platform*Competition/Code/DepthVolume/tex/dep
 thVolume.tex
@@ -142,119 +142,214 @@ Underfull \hbox (badness 10000) in paragraph at lines 147--148
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 151--152
-
- []
-
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 152--154
+Underfull \hbox (badness 10000) in paragraph at lines 154--155
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 154--156
+Underfull \hbox (badness 10000) in paragraph at lines 155--156
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 161--162
+Underfull \hbox (badness 10000) in paragraph at lines 158--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 163--164
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
 
  []
 
 
-<./../output/trends/TimeChartDollarShot.png, id=26, 907.89188pt x 379.91937pt>
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--165
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 170--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 172--173
+
+ []
+
+[5]
+<./../output/trends/TimeChartDollarShot.png, id=30, 907.89188pt x 379.91937pt>
 File: ./../output/trends/TimeChartDollarShot.png Graphic file (type png)
 
 <use ./../output/trends/TimeChartDollarShot.png>
 Package pdftex.def Info: ./../output/trends/TimeChartDollarShot.png used on inp
-ut line 167.
+ut line 176.
 (pdftex.def)             Requested size: 341.43306pt x 142.8752pt.
- [5]
-Underfull \hbox (badness 10000) in paragraph at lines 171--172
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 173--174
+Underfull \hbox (badness 10000) in paragraph at lines 182--183
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 174--175
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
 
  []
 
-<./../output/trends/AllCoeffsTS.png, id=31, 620.0766pt x 722.7pt>
-File: ./../output/trends/AllCoeffsTS.png Graphic file (type png)
 
-<use ./../output/trends/AllCoeffsTS.png>
-Package pdftex.def Info: ./../output/trends/AllCoeffsTS.png used on input line 
-179.
-(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
-<./../output/trends/AllCoeffsHist.png, id=32, 620.0766pt x 722.7pt>
-File: ./../output/trends/AllCoeffsHist.png Graphic file (type png)
+ []
 
-<use ./../output/trends/AllCoeffsHist.png>
-Package pdftex.def Info: ./../output/trends/AllCoeffsHist.png used on input lin
-e 184.
-(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 189.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 189.
+
+<./../output/frames/unfiltered/Min/BetaHistograms.png, id=31, 867.24pt x 722.7p
+t>
+File: ./../output/frames/unfiltered/Min/BetaHistograms.png Graphic file (type p
+ng)
+ <use ./../output/frames/unfiltered/Min/BetaHistograms.png>
+Package pdftex.def Info: ./../output/frames/unfiltered/Min/BetaHistograms.png u
+sed on input line 195.
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+
+<./../output/frames/unfiltered/Min/BetaLines.png, id=32, 867.24pt x 722.7pt>
+File: ./../output/frames/unfiltered/Min/BetaLines.png Graphic file (type png)
+
+<use ./../output/frames/unfiltered/Min/BetaLines.png>
+Package pdftex.def Info: ./../output/frames/unfiltered/Min/BetaLines.png used o
+n input line 196.
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+
+<./../output/frames/filtered/Avg/BetaHistograms.png, id=33, 867.24pt x 722.7pt>
+File: ./../output/frames/filtered/Avg/BetaHistograms.png Graphic file (type png
+)
+<use ./../output/frames/filtered/Avg/BetaHistograms.png>
+Package pdftex.def Info: ./../output/frames/filtered/Avg/BetaHistograms.png use
+d on input line 201.
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+
+<./../output/frames/filtered/Avg/BetaLines.png, id=34, 867.24pt x 722.7pt>
+File: ./../output/frames/filtered/Avg/BetaLines.png Graphic file (type png)
+
+<use ./../output/frames/filtered/Avg/BetaLines.png>
+Package pdftex.def Info: ./../output/frames/filtered/Avg/BetaLines.png used on 
+input line 202.
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
  [6 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
 ut/trends/TimeChartDollarShot.png>]
+Overfull \vbox (44.00752pt too high) has occurred while \output is active []
+
+
 [7 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
-t/trends/AllCoeffsTS.png>]
-<./../output/trends/ExchangeCoeffsTS.png, id=43, 620.0766pt x 722.7pt>
-File: ./../output/trends/ExchangeCoeffsTS.png Graphic file (type png)
+t/frames/unfiltered/Min/BetaHistograms.png> <C:/Users/tcho/Dropbox/Project - Pl
+atform Competition/Code/DepthVolume/output/frames/unfiltered/Min/BetaLines.png>
+]
+Overfull \vbox (44.56308pt too high) has occurred while \output is active []
 
-<use ./../output/trends/ExchangeCoeffsTS.png>
-Package pdftex.def Info: ./../output/trends/ExchangeCoeffsTS.png used on input 
-line 191.
-(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
 
-<./../output/trends/ExchangeCoeffsHist.png, id=44, 620.0766pt x 722.7pt>
-File: ./../output/trends/ExchangeCoeffsHist.png Graphic file (type png)
+[8 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
+t/frames/filtered/Avg/BetaHistograms.png> <C:/Users/tcho/Dropbox/Project - Plat
+form Competition/Code/DepthVolume/output/frames/filtered/Avg/BetaLines.png>]
+<./../output/bacmsftjancount.png, id=49, 670.505pt x 602.25pt>
+File: ./../output/bacmsftjancount.png Graphic file (type png)
 
-<use ./../output/trends/ExchangeCoeffsHist.png>
-Package pdftex.def Info: ./../output/trends/ExchangeCoeffsHist.png used on inpu
-t line 196.
-(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
- [8 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
-ut/trends/AllCoeffsHist.png>]
-[9 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
-t/trends/ExchangeCoeffsTS.png>]
-<./../output/trends/SymbolCoeffsTS.png, id=53, 620.0766pt x 722.7pt>
-File: ./../output/trends/SymbolCoeffsTS.png Graphic file (type png)
+<use ./../output/bacmsftjancount.png>
+Package pdftex.def Info: ./../output/bacmsftjancount.png used on input line 215
+.
+(pdftex.def)             Requested size: 170.71652pt x 153.33737pt.
 
-<use ./../output/trends/SymbolCoeffsTS.png>
-Package pdftex.def Info: ./../output/trends/SymbolCoeffsTS.png used on input li
-ne 203.
-(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
+<./../output/bacmsftjan.png, id=50, 670.505pt x 602.25pt>
+File: ./../output/bacmsftjan.png Graphic file (type png)
 
-<./../output/trends/SymbolCoeffsHist.png, id=54, 620.0766pt x 722.7pt>
-File: ./../output/trends/SymbolCoeffsHist.png Graphic file (type png)
+<use ./../output/bacmsftjan.png>
+Package pdftex.def Info: ./../output/bacmsftjan.png used on input line 216.
+(pdftex.def)             Requested size: 170.71652pt x 153.33737pt.
 
-<use ./../output/trends/SymbolCoeffsHist.png>
-Package pdftex.def Info: ./../output/trends/SymbolCoeffsHist.png used on input 
-line 208.
-(pdftex.def)             Requested size: 341.43306pt x 397.93835pt.
- [10 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
-put/trends/ExchangeCoeffsHist.png>] [11 <C:/Users/tcho/Dropbox/Project - Platfo
-rm Competition/Code/DepthVolume/output/trends/SymbolCoeffsTS.png>] [12 <C:/User
-s/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/output/trends/Sy
-mbolCoeffsHist.png>]
+Overfull \hbox (31.10403pt too wide) in paragraph at lines 223--223
+[][]\OT1/cmr/m/n/8 http://www.nasdaqtrader.com/content/technicalsupport/specifi
+cations/utp/utdfspecification.pdf| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--223
+[][]\OT1/cmr/m/n/8 http://www.finra.org/industry/trf/trade-report-modifiers-and
+-applicability-limit-
+ []
+
+<./../output/frames/filtered/Avg/GOOG/36.png, id=51, 867.24pt x 722.7pt>
+File: ./../output/frames/filtered/Avg/GOOG/36.png Graphic file (type png)
+
+<use ./../output/frames/filtered/Avg/GOOG/36.png>
+Package pdftex.def Info: ./../output/frames/filtered/Avg/GOOG/36.png used on in
+put line 233.
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+ [9 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/bacmsftjancount.png> <C:/Users/tcho/Dropbox/Project - Platform Competition/C
+ode/DepthVolume/output/bacmsftjan.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 237--238
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 239--257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 239--257
+
+ []
+
+[10 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/frames/filtered/Avg/GOOG/36.png (PNG copy)>]
+Overfull \hbox (18.30627pt too wide) in paragraph at lines 259--274
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--274
+
+ []
+
+<./../output/bidSizebyx.png, id=60, 670.505pt x 602.25pt>
+File: ./../output/bidSizebyx.png Graphic file (type png)
+
+<use ./../output/bidSizebyx.png>
+Package pdftex.def Info: ./../output/bidSizebyx.png used on input line 278.
+(pdftex.def)             Requested size: 341.43306pt x 306.67476pt.
+
+<./../output/spreadsByxhilite.png, id=61, 670.505pt x 602.25pt>
+File: ./../output/spreadsByxhilite.png Graphic file (type png)
+
+<use ./../output/spreadsByxhilite.png>
+Package pdftex.def Info: ./../output/spreadsByxhilite.png used on input line 28
+3.
+(pdftex.def)             Requested size: 341.43306pt x 306.67476pt.
+ [11] [12 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolum
+e/output/bidSizebyx.png>] [13 <C:/Users/tcho/Dropbox/Project - Platform Competi
+tion/Code/DepthVolume/output/spreadsByxhilite.png>]
 ("C:\Users\tcho\Dropbox\Project - Platform Competition\Code\DepthVolume\tex\dep
 thVolume.aux") ) 
 Here is how much of TeX's memory you used:
- 1228 strings out of 493921
- 17246 string characters out of 3147286
- 73321 words of memory out of 3000000
- 4551 multiletter control sequences out of 15000+200000
+ 1262 strings out of 493921
+ 18210 string characters out of 3147286
+ 76321 words of memory out of 3000000
+ 4577 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  27i,10n,19p,970b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -262,19 +357,17 @@ Here is how much of TeX's memory you used:
 x10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Prog
 ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb>
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on depthVolume.pdf (12 pages, 702624 bytes).
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+r7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on depthVolume.pdf (13 pages, 736199 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
+ 115 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
