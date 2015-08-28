@@ -225,7 +225,7 @@ The fact that such trades are not considered to be a true "Last Sale''\footnote{
 As a response, all trades with condition code 4 were filtered out.
 
 \subsubsection{Flat Relationship of Volume v. Depth for BAC}
-This flat relationship could be attributable to the CHX outlier which hovered in the low-depth/high-volume region. Filtering out Derivatively Priced trades remedied this flatness.
+This flat relationship could be attributable to the CHX outlier which hovered in the low-depth/high-volume region. Filtering out Derivatively Priced trades remedied this flatness.\\
 
 \subsubsection{GOOG: Different Volumes for Similar Depths}
 \begin{figure}[H]
@@ -272,7 +272,16 @@ DATETIME & SYMBOL & EX & BIDSIZ & BID & OFR & OFRSIZ \\ \hline
 \hline
 \end{tabular}\\
 
-Commission full year of:
+To further support this, we look include two more high-priced stocks, NFLX and TSLA. We observe wide, inconsistent spreads among their different exchanges' BBOs. Indeed, we see the same behavior in their slopes.\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/frames/filtered/Avg/NFLX/147}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Avg/TSLA/57}.png}
+\caption{A sample date in GOOG exhibiting both low variability in depth, and BATS EDGA and BATS BYX pushing the regression line to a negative slope.}
+\end{figure}
+
+
+Finally, we look at BYX's skewing of the slope, and we note interesting clumping of higher BBO sizes in BYX:\\
 \begin{figure}[H]
 \centering
 \includegraphics[width=120mm]{{./../output/bidSizebyx}.png}
@@ -284,4 +293,32 @@ Commission full year of:
 \caption{Histogram of spread, note large spread in BYX around 40. BYX has higher spreads. See if bump only happens on certain days or is always hinted at by data.}
 \end{figure}
 
+\subsubsection{Depth Inconsistency and its Consequences}
+In a stock like BAC, the book is typically one tick wide with volume on the order of dozens:\\
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ  & BID   & OFR & OFRSIZ \\ \hline 
+2014-03-20 10:02:00   & BAC & T  &   64& 17.51& 17.52&    257         \\ \hline 
+2014-03-20 10:02:00   & BAC & Z  &   19 &17.51& 17.52&    103         \\ \hline 
+2014-03-20 10:02:00   & BAC & P  &   73 &17.51& 17.52&    186         \\ \hline 
+2014-03-20 10:02:00   & BAC & K  &   33 &17.51& 17.52&    218         \\ \hline 
+2014-03-20 10:02:00   & BAC & N  &    6 &17.51 &17.52&    437         \\ \hline 
+\end{tabular}\\
+
+However, exchanges like CBSX, CHX, NSX, and NASDAQ PSX generally have wider spreads and significantly less size on their BBOs. This leads to their distance from the other exchanges in depth/volume space, and they exert a disproportionate amount of influence on the regression.\\
+
+Consider the following quotes from NSX\\
+
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ  & BID   & OFR & OFRSIZ \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     2     \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     1        \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 &  0.00   &    0         \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.56  &     1         \\ \hline 
+2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.51  &     1         \\ \hline 
+2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.56  &     1 \\ \hline 
+\end{tabular}\\
+
+This sort of quote behavior is not present day-to-day, but gave us reason to run a separate version of our analyses without the four exchanges.\\
 \end{document}

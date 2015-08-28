@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{float}
+\begin{document}
+
+\title{CHX: Special Cases}
+
+\maketitle
+\vspace{.5pc}
+
+\section{Derivatively Priced Trades}
+\subsection{Motivation}
+Conclusion
+Volumes driven by condition code 4
+decision to drop condition code 4
+
+\subsection{Definition}
+sdaf\footnote{http://www.chx.com/\_posts/information-memos/2015/MR-15-04.pdf}
+
+\subsection{Particular to CHX}
+We investigate the CHX points which occur in the top right region (low depth, high volume).Cond Code 4 is ONLY on exchange CHX and FINRA
+excluding all cond code 4
+D has quotes! after a 1.5 months into 2014
+
+
+\subsection{Makeup of CHX Volume}
+
+\subsection{Patterns Checked}
+For one such outlier, BAC on CHX on 10-Jan-2014, we open the individual trades:
+[[TRADE DATA OF ALL CHX TRADES IN BAC ON JAN 10]]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/bacmsftjancount}.png}
+\includegraphics[width=60mm]{{./../output/bacmsftjan}.png}
+\caption{In January, although trades with condition code 4 constituted less than 15\% of the trades, over 95\% of volume held this condition code.}
+\end{figure}
+
+Most interestingly, we observe two large trades with condition code 4, indicating "Derivatively Priced" trades. Online literature suggests that activity in Exchange Traded Products\footnote{http://www.investopedia.com/terms/e/exchange-traded-products-etp.asp} largely make up these trades, perhaps when different symbols are negotiated at a package price and the individual trades semi-arbitrarily take on parts of the cost.
+
+The fact that such trades are not considered to be a true "Last Sale''\footnote{http://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/utdfspecification.pdf} and are allowed outside of limit-up and limit-down prices\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands} strongly indicates that these trades' prices are not dictated by the BBO.
+
+As a response, all trades with condition code 4 were filtered out.
+
+\section{ISO Orders}
+This flat relationship could be attributable to the CHX outlier which hovered in the low-depth/high-volume region. Filtering out Derivatively Priced trades remedied this flatness.\\
+
+\end{document}

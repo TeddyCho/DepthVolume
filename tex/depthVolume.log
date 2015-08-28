@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  27 AUG 2015 08:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  27 AUG 2015 12:55
 entering extended mode
 **C:/Users/tcho/Dropbox/Project*-*Platform*Competition/Code/DepthVolume/tex/dep
 thVolume.tex
@@ -291,6 +291,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 223--223
 -applicability-limit-
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
+
+ []
+
 <./../output/frames/filtered/Avg/GOOG/36.png, id=51, 867.24pt x 722.7pt>
 File: ./../output/frames/filtered/Avg/GOOG/36.png Graphic file (type png)
 
@@ -326,30 +331,87 @@ Underfull \hbox (badness 10000) in paragraph at lines 259--274
 
  []
 
-<./../output/bidSizebyx.png, id=60, 670.505pt x 602.25pt>
+<./../output/frames/filtered/Avg/NFLX/147.png, id=60, 867.24pt x 722.7pt>
+File: ./../output/frames/filtered/Avg/NFLX/147.png Graphic file (type png)
+
+<use ./../output/frames/filtered/Avg/NFLX/147.png>
+Package pdftex.def Info: ./../output/frames/filtered/Avg/NFLX/147.png used on i
+nput line 278.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Avg/TSLA/57.png, id=61, 867.24pt x 722.7pt>
+File: ./../output/frames/filtered/Avg/TSLA/57.png Graphic file (type png)
+
+<use ./../output/frames/filtered/Avg/TSLA/57.png>
+Package pdftex.def Info: ./../output/frames/filtered/Avg/TSLA/57.png used on in
+put line 279.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 275--281
+
+ []
+
+[11] <./../output/bidSizebyx.png, id=65, 670.505pt x 602.25pt>
 File: ./../output/bidSizebyx.png Graphic file (type png)
 
 <use ./../output/bidSizebyx.png>
-Package pdftex.def Info: ./../output/bidSizebyx.png used on input line 278.
+Package pdftex.def Info: ./../output/bidSizebyx.png used on input line 287.
 (pdftex.def)             Requested size: 341.43306pt x 306.67476pt.
 
-<./../output/spreadsByxhilite.png, id=61, 670.505pt x 602.25pt>
+Underfull \hbox (badness 10000) in paragraph at lines 284--289
+
+ []
+
+<./../output/spreadsByxhilite.png, id=66, 670.505pt x 602.25pt>
 File: ./../output/spreadsByxhilite.png Graphic file (type png)
 
 <use ./../output/spreadsByxhilite.png>
-Package pdftex.def Info: ./../output/spreadsByxhilite.png used on input line 28
-3.
+Package pdftex.def Info: ./../output/spreadsByxhilite.png used on input line 29
+2.
 (pdftex.def)             Requested size: 341.43306pt x 306.67476pt.
- [11] [12 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolum
-e/output/bidSizebyx.png>] [13 <C:/Users/tcho/Dropbox/Project - Platform Competi
-tion/Code/DepthVolume/output/spreadsByxhilite.png>]
+ [12 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/frames/filtered/Avg/NFLX/147.png (PNG copy)> <C:/Users/tcho/Dropbox/Project
+ - Platform Competition/Code/DepthVolume/output/frames/filtered/Avg/TSLA/57.png
+ (PNG copy)>] [13 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/De
+pthVolume/output/bidSizebyx.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 297--307
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--309
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 310--311
+
+ []
+
+[14 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/spreadsByxhilite.png>]
+Overfull \hbox (8.86174pt too wide) in paragraph at lines 312--322
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 312--322
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
+
+ []
+
+[15]
 ("C:\Users\tcho\Dropbox\Project - Platform Competition\Code\DepthVolume\tex\dep
 thVolume.aux") ) 
 Here is how much of TeX's memory you used:
- 1262 strings out of 493921
- 18210 string characters out of 3147286
+ 1274 strings out of 493921
+ 18683 string characters out of 3147286
  76321 words of memory out of 3000000
- 4577 multiletter control sequences out of 15000+200000
+ 4585 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  27i,10n,19p,970b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -365,9 +427,9 @@ onts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
 r7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
 /Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program
  Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on depthVolume.pdf (13 pages, 736199 bytes).
+Output written on depthVolume.pdf (15 pages, 845285 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
+ 123 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

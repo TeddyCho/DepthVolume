@@ -173,14 +173,16 @@ createCoeffPlot <- function(theSeries, myOutputFolder){
       myCurrDate <- myDates[i]
       myDateSeries <- mySymSeries[which(mySymSeries$Date == myCurrDate),]
       myDateSeries[myDateSeries==0]<-NA ########### WHATT OR JUST EXCLudE?!?!?
-      myFit_Avg <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars_Avg), data = myDateSeries)
-      myFit_Min <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars_Min), data = myDateSeries)
-      myCoeff_Avg <- data.frame(Date=myCurrDate, symbol=sym, depthMethod="Avg", 
-                               Beta=summary(myFit_Avg)$coefficients[2]) 
-      myCoeff_Min <- data.frame(Date=myCurrDate, symbol=sym, depthMethod="Min", 
-                                Beta=summary(myFit_Min)$coefficients[2]) 
-      
-      myCoeffDF <- rbind(myCoeffDF, myCoeff_Avg, myCoeff_Min)
+      if(any(!is.na(myDateSeries$AverageDepth_Dollars_Avg))){
+        myFit_Avg <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars_Avg), data = myDateSeries)
+        myFit_Min <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars_Min), data = myDateSeries)
+        myCoeff_Avg <- data.frame(Date=myCurrDate, symbol=sym, depthMethod="Avg", 
+                                 Beta=summary(myFit_Avg)$coefficients[2]) 
+        myCoeff_Min <- data.frame(Date=myCurrDate, symbol=sym, depthMethod="Min", 
+                                  Beta=summary(myFit_Min)$coefficients[2]) 
+        
+        myCoeffDF <- rbind(myCoeffDF, myCoeff_Avg, myCoeff_Min)
+      }
     }
   }
   
@@ -216,20 +218,19 @@ plotDateSeries <- function(myDateSeries, aDate, myOutputFolder, aSymbol, myDepth
 }
 
 setwd("C:/Users/tcho/Dropbox/Project - Platform Competition/")
-mySymbols = c("BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
-mySymbols = c("TSLA", "NFLX")
+mySymbols = c("BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD", "TSLA", "NFLX")
 myOutputFolder <- paste(getwd(), '/Code/DepthVolume/output/', sep="")
 
 theSeries <- retrieveGraphInputData(mySymbols)
 createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""), 'Min')
-createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""))
 createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Avg', '/', sep=""), 'Avg')
+createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""))
 createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Avg', '/', sep=""))
-theSeries <- theSeries[which(!(theSeries$Exchange %in% c("NSX", "CHX", "CBSX", "NASDAQ.PSX"))),]
-createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""), 'Min')
-createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""))
-createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""), 'Avg')
-createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""))
+theFilteredSeries <- theSeries[which(!(theSeries$Exchange %in% c("NSX", "CHX", "CBSX", "NASDAQ.PSX"))),]
+createPlotAnim(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""), 'Min')
+createPlotAnim(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""), 'Avg')
+createCoeffPlot(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""))
+createCoeffPlot(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""))
 
 
 
@@ -280,6 +281,11 @@ b$COND[b$COND == "@4"] <- "4"
 b$COND[b$COND == "@F"] <- "F"
 ggplot(b, aes(x=COND, fill=COND)) + 
   geom_bar()
+head(b)
+
+b=read.csv("C:\\Users\\tcho\\Dropbox\\Project - Platform Competition\\Code\\DepthVolume\\data\\bacmar20quotes.csv")
+b$DATETIME = strptime(paste0(b$DATE, b$TIME), format="%Y%m%d%H:%M:%S")
+b=b[,c("DATETIME", "SYMBOL", "EX", "BIDSIZ", "BID", "OFR", "OFRSIZ", "MMID", "MODE")]
 head(b)
 
 
