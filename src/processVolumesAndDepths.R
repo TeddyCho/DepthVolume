@@ -34,21 +34,10 @@ enrichDepthVolumeData <- function(aData){
   aData$ExchangeSymbol = paste0(aData$Exchange, ": ", aData$Symbol)
   
   aData$Date <- as.Date(sapply(aData$Date, function(x) toString(x)), format="%Y%m%d")
-  
-  #REMOVE LATER
-  aData <- aData[aData$Exchange != ".",]
-  myDates <- unique(aData$Date)
-  #aData$DayIndex <- sapply(aData$Date, function(x) which(myDates==x)+100)
-  
   return(aData)
 }
 filterFromDepthVolume <- function(mySeries){
-  #theFilteredSeries = mySeries[mySeries$Exchange !="FINRA" &
-  #                               !is.na(mySeries$AverageDepth) & mySeries$AverageDepth != 0 &
-  #                               !is.na(mySeries$Volume) & mySeries$Volume != 0,]
   theFilteredSeries <- mySeries[!(mySeries$Exchange %in% c("FINRA", "UNKNOWN_O", ".")),]
-  #theFilteredSeries$Volume_Shares[is.na(theFilteredSeries$Volume_Shares)] = 0
-  
   return(theFilteredSeries)
 }
 retrieveGraphInputData <- function(aSymbols){
@@ -68,78 +57,6 @@ averageOverSymbolExchange <- function(mySeries){
                      paste(getwd(),'\\Github\\DepthVolume\\output\\scatterDollarLog.html', sep=""))
   
 }
-createDancingBubblePlot <- function(aSeries, aSuffix=''){
-  myState='
-  {"yLambda":0,"xLambda":0,
-  "sizeOption":"5", "colorOption":"2","dimensions":{"iconDimensions":["dim0"]},
-  "iconKeySettings":[]}
-  '
-  aSeries<-aSeries[,-which(colnames(aSeries) %in% c("Volume_Shares", "AverageDepth_Shares", "Date"))]
-  aSeries<-aSeries[c("DayIndex", setdiff(names(aSeries), "DayIndex"))]
-  aSeries<-aSeries[!is.na(aSeries$Volume_Dollars),]
-  M <- gvisMotionChart(aSeries, idvar="ExchangeSymbol", timevar="DayIndex",
-                       xvar="AverageDepth_Dollars", yvar="Volume_Dollars",
-                       options=list(width=1200, height=500, state=myState),
-                       chartid="DollarDepthVolume")
-  plot(M)
-  myFileName = paste(getwd(), '/Code/DepthVolume/output/', 'timeChartDollar', aSuffix, '.html', sep="")
-  print(M, file=myFileName)
-  print(myFileName)
-}
-
-getCoefficientsByGroup <- function(theSeries, aGrouping, aIsFilter){
-  myGroups <- unique(theSeries[,aGrouping])
-  myCoefficientDF <- read.table(text = "", col.names = c("Date", myGroups))
-  myDates <- unique(theSeries$Date)
-  for(i in 1:length(myDates)){
-    myDate = myDates[i]
-    myCoefficientDF[i, "Date"] = as.Date(myDate)
-    myDateData <- theSeries[which(theSeries$Date == myDate),]
-    myDateGroups = unique(myDateData[,aGrouping])
-    for(g in myDateGroups){
-      myDateGroupData <- myDateData[which(myDateData[,aGrouping] == g),]
-      myFit <- lm(log(Volume_Dollars) ~ log(AverageDepth_Dollars), data = myDateGroupData)
-      mySlope = summary(myFit)$coefficients[2]
-      myCoefficientDF[i,g] = mySlope
-    }
-  }
-  myCoefficientDF$Date <- as.Date(myCoefficientDF$Date, origin="1970-01-01")
-  return(myCoefficientDF)
-}
-getCoefficients <- function(theSeries, aIsFilter=FALSE){
-  myCoefficientDF <- read.table(text = "", col.names = c("Date", "Slope"))
-  myDates <- unique(theSeries$Date)
-  for(i in 1:length(myDates)){
-    myDate = myDates[i]
-    myCoefficientDF[i, "Date"] = as.Date(myDate)
-    myDateData <- theSeries[which(theSeries$Date == myDate),]
-    
-    myFit <- lm(log(Volume) ~ log(AverageDepth), data = myDateData)
-    mySlope = summary(myFit)$coefficients[2]
-    myCoefficientDF[i,"Slope"] = mySlope
-  }
-  myCoefficientDF$Date <- as.Date(myCoefficientDF$Date, origin="1970-01-01")
-  return(myCoefficientDF)
-}
-saveGraphsForCoeffs <- function(myCoefficientDF, myGrouping, aSuffix=""){
-  d <- melt(myCoefficientDF, id.vars = "Date", variable.name = 'series')
-  
-  ggplot(d, aes(x = value)) + 
-    facet_wrap(~variable, ncol=1, scales="free") + 
-    geom_histogram() +
-    geom_vline(aes(xintercept=1, colour = "blue"))
-  ggsave(file = paste(getwd(), "/Code/DepthVolume/output/trends/", myGrouping, "CoeffsHist", aSuffix,
-                      ".png", sep=""),
-         height = 10)
-  ggplot(d, aes(Date, value)) + 
-    facet_wrap(~variable, ncol=1, scales="free") +
-    geom_line(aes(group=variable)) +
-    geom_hline(aes(yintercept=1, colour = "blue")) +
-    scale_x_date(labels = date_format("%m-%Y"))
-  ggsave(file = paste(getwd(), "/Code/DepthVolume/output/trends/", myGrouping, "CoeffsTS", aSuffix,
-                      ".png", sep=""),
-         height = 10)
-}
 createPlotAnim <- function(theSeries, myOutputFolder, myDepthStyle){
   theSeries$AverageDepth_Dollars <- theSeries[, paste("AverageDepth_Dollars_", myDepthStyle, sep="")]
   theSeries$AverageDepth_Shares <- theSeries[, paste("AverageDepth_Shares_", myDepthStyle, sep="")]
@@ -156,11 +73,7 @@ createPlotAnim <- function(theSeries, myOutputFolder, myDepthStyle){
       myDateSeries <- mySymSeries[which(mySymSeries$Date == myCurrDate),]
       plotDateSeries(myDateSeries, myCurrDate, myOutputFolder, sym, myDepthLim, myVolumeLim, myDepthStyle, i)
     }
-    #myConvertPath = '"C:\\Program Files\\ImageMagick-6.9.1-Q16\\convert.exe"'
-    #setwd(paste(myOutputFolder, sep=""))
-    #my_command <- paste(myConvertPath, " *.png -delay 3 -loop 0 ", "DepthVolume_", sym, "_", myDepthStyle, ".gif", sep="")
-    #system(my_command)
-    #unlink('*.png')
+    #processPNGsIntoGIF(myOutputFolder, paste("DepthVolume_", sym, "_", myDepthStyle, sep=""))
   }
 }
 createCoeffPlot <- function(theSeries, myOutputFolder){
@@ -185,7 +98,6 @@ createCoeffPlot <- function(theSeries, myOutputFolder){
       }
     }
   }
-  
   ggplot(data=myCoeffDF, aes(x=Date, y=Beta, colour=depthMethod)) +
     geom_line(alpha=.5) +
     geom_hline(aes(yintercept=1), colour = "green") +
@@ -222,6 +134,7 @@ mySymbols = c("BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD", "TSLA", "NFLX")
 myOutputFolder <- paste(getwd(), '/Code/DepthVolume/output/', sep="")
 
 theSeries <- retrieveGraphInputData(mySymbols)
+
 createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""), 'Min')
 createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Avg', '/', sep=""), 'Avg')
 createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""))
@@ -231,6 +144,8 @@ createPlotAnim(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 
 createPlotAnim(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""), 'Avg')
 createCoeffPlot(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""))
 createCoeffPlot(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""))
+
+
 
 
 
@@ -292,25 +207,4 @@ head(b)
 b=read.csv("C:\\Users\\tcho\\Dropbox\\Project - Platform Competition\\Code\\DepthVolume\\data\\tslanflxquotes.csv")
 b$DATETIME = strptime(paste0(b$DATE, b$TIME), format="%Y%m%d%H:%M:%S")
 b=b[,c("DATETIME", "SYMBOL", "EX", "BIDSIZ", "BID", "OFR", "OFRSIZ", "MMID", "MODE")]
-head(b)
-'
-createDancingBubblePlot(theSeries, "_BAC_GOOG_min")
-mapSymbolToColor <- function(aSymbol){
-  mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")
-  myColors = c("red", "orange", "yellow", "green", "blue", "purple", "black", "brown")
-  myIndex = mySymbols == aSymbol
-  return(myColors[myIndex])
-}
-createScatterDV <- function(aData, aX, aY, aFile){
-  d1 <- dPlot(x=aX, y=aY,
-              groups = c("startTime", "endTime", "exchange", "symbol"),
-              data = aData, type = "bubble",
-              height=800, width=1400)
-  d1$xAxis(type = "addMeasureAxis" )
-  d1$yAxis(type = "addMeasureAxis" )
-  d1$legend(x = 200, y = 10, width = 500, height = 20,
-            horizontalAlign = "right")
-  d1
-  d1$save(aFile, standalone = TRUE)
-  return(d1)
-}'                                                                                                                                                            
+head(b)                                                                                            
