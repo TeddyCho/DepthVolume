@@ -1,13 +1,14 @@
 library(ggplot2)
 library(plyr)
-library(rCharts)
+#library(rCharts)
 library(googleVis)
 library(reshape)
+library(scales)
 library(RJSONIO)
 
 readDepthVolumeData <- function(mySymbols){
   for(sym in mySymbols){
-    myData <- read.csv(paste(getwd(), "/Data/depth vs volume/sec/", 'depth2014_sec_', sym,".csv", sep =""),
+    myData <- read.csv(paste(getwd(), "~/Dropbox/Project - Platform Competition/Data/depth vs volume/sec/", 'depth2014_sec_', sym,".csv", sep =""),
                        header = TRUE, stringsAsFactors = FALSE)
     if(sym == mySymbols[1]){
       mySeries <- myData
@@ -71,7 +72,8 @@ createPlotAnim <- function(theSeries, myOutputFolder, myDepthStyle){
     for(i in 1:length(myDates)){
       myCurrDate <- myDates[i]
       myDateSeries <- mySymSeries[which(mySymSeries$Date == myCurrDate),]
-      plotDateSeries(myDateSeries, myCurrDate, myOutputFolder, sym, myDepthLim, myVolumeLim, myDepthStyle, i)
+      plotSeries(myDateSeries, myCurrDate, sym, myDepthLim, myVolumeLim, myDepthStyle,
+                     paste(myOutputFolder, sym, '/', i-1, '.png', sep=""))
     }
     #processPNGsIntoGIF(myOutputFolder, paste("DepthVolume_", sym, "_", myDepthStyle, sep=""))
   }
@@ -90,8 +92,10 @@ createCoeffPlot <- function(theSeries, myOutputFolder){
         myFit_Avg <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars_Avg), data = myDateSeries)
         myFit_Min <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars_Min), data = myDateSeries)
         myCoeff_Avg <- data.frame(Date=myCurrDate, symbol=sym, depthMethod="Avg", 
-                                 Beta=summary(myFit_Avg)$coefficients[2]) 
+                                  Alpha=summary(myFit_Avg)$coefficients[1], 
+                                  Beta=summary(myFit_Avg)$coefficients[2]) 
         myCoeff_Min <- data.frame(Date=myCurrDate, symbol=sym, depthMethod="Min", 
+                                  Alpha=summary(myFit_Min)$coefficients[1], 
                                   Beta=summary(myFit_Min)$coefficients[2]) 
         
         myCoeffDF <- rbind(myCoeffDF, myCoeff_Avg, myCoeff_Min)
@@ -108,8 +112,19 @@ createCoeffPlot <- function(theSeries, myOutputFolder){
     geom_vline(aes(xintercept=1), colour = "green") +
     facet_wrap(~symbol, ncol=2, scales="free")
   ggsave(file=paste(myOutputFolder, "BetaHistograms", '.png', sep=""), width = 12, height=10)
+  
+  ggplot(data=myCoeffDF, aes(x=Date, y=Alpha, colour=depthMethod)) +
+    geom_line(alpha=.5) +
+    geom_hline(aes(yintercept=0), colour = "green") +
+    facet_wrap(~symbol, ncol=2, scales="free")
+  ggsave(file=paste(myOutputFolder, "AlphaLines", '.png', sep=""), width = 12, height=10)
+  ggplot(myCoeffDF, aes(x=Alpha, fill=depthMethod)) + 
+    geom_histogram(alpha=0.2, position="identity", binwidth=.05) +
+    geom_vline(aes(xintercept=0), colour = "green") +
+    facet_wrap(~symbol, ncol=2, scales="free")
+  ggsave(file=paste(myOutputFolder, "AlphaHistograms", '.png', sep=""), width = 12, height=10)
 }
-plotDateSeries <- function(myDateSeries, aDate, myOutputFolder, aSymbol, myDepthLim, myVolumeLim, myDepthStyle, i){
+plotSeries <- function(myDateSeries, aDate, aSymbol, myDepthLim, myVolumeLim, myDepthStyle, myFileName){
   myDateSeries[myDateSeries==0]<-NA ########### WHATT OR JUST EXCLudE?!?!?
   if(any(!is.na(myDateSeries$AverageDepth_Dollars))){
     myFit <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars), data = myDateSeries)
@@ -119,31 +134,91 @@ plotDateSeries <- function(myDateSeries, aDate, myOutputFolder, aSymbol, myDepth
   
     ggplot(data=myDateSeries, aes(x=AverageDepth_Dollars, y=Volume_Dollars, color=Exchange)) +
       geom_point(alpha=.5, size=3) + 
-      scale_x_log10(limits = c(.1, myDepthLim)) + scale_y_log10(limits = c(.1, myVolumeLim)) +
+      scale_x_log10(limits = c(.1, myDepthLim), labels=comma) + scale_y_log10(limits = c(.1, myVolumeLim), labels=comma) +
       geom_abline(intercept = 0, slope = 1, colour = "green", alpha=.5) +
       geom_abline(intercept = myFitIntercept, slope = myFitSlope, colour = "red", alpha=.3) +
-      ggtitle(paste(aSymbol, ": Volume v. Depth (", myDepthStyle, " Method)\n", toString(aDate), sep="")) + theme(plot.title = element_text(size=20, face="bold", vjust=2)) +
+      ggtitle(paste(aSymbol, ": Volume v. Depth (", myDepthStyle, " Method)\n", toString(aDate), sep="")) + 
+      theme(plot.title = element_text(size=20, face="bold", vjust=2)) +
       theme(legend.position = "none") +
       geom_text(aes(label=Exchange), size=4, hjust=1.1, vjust=0)
-    ggsave(file=paste(myOutputFolder, aSymbol, '/', i-1, '.png', sep=""), width = 12, height=10, dpi=100)
+    ggsave(file=myFileName, width = 12, height=10, dpi=100)
+  }
+}
+createYearPlotPerSymbol <- function(theSeries, myOutputFolder, myDepthStyle){
+  theSeries$AverageDepth_Dollars <- theSeries[, paste("AverageDepth_Dollars_", myDepthStyle, sep="")]
+  theSeries$AverageDepth_Shares <- theSeries[, paste("AverageDepth_Shares_", myDepthStyle, sep="")]
+  
+  myDepthLim <- 1.1 * max(na.omit(theSeries$AverageDepth_Dollars))
+  myVolumeLim <- 1.1 * max(na.omit(theSeries$Volume_Dollars))
+  
+  mySymbols = unique(theSeries$Symbol)
+  for(sym in mySymbols){
+    mySymSeries <- theSeries[which(theSeries$Symbol == sym),]
+    mySymSeries[is.na(mySymSeries)] = 0
+    myAveragedForSym <- aggregate(mySymSeries, by=list(mySymSeries$Symbol, mySymSeries$Exchange), FUN=mean)
+    myAveragedForSym$Exchange <- myAveragedForSym$Group.2
+    
+    plotSeries(myAveragedForSym, '', sym, myDepthLim, myVolumeLim, myDepthStyle,
+               paste(myOutputFolder, sym, '/', 'overAllTime', '.png', sep=""))
+  }
+}
+createYearPlot <- function(theSeries, myDepthStyle, myFileName){
+  theSeries$AverageDepth_Dollars <- theSeries[, paste("AverageDepth_Dollars_", myDepthStyle, sep="")]
+  theSeries$AverageDepth_Shares <- theSeries[, paste("AverageDepth_Shares_", myDepthStyle, sep="")]
+  
+  myDepthLim <- 1.1 * max(na.omit(theSeries$AverageDepth_Dollars))
+  myVolumeLim <- 1.1 * max(na.omit(theSeries$Volume_Dollars))
+  
+  theSeries[is.na(theSeries)] = 0
+  myAveraged <- aggregate(theSeries, by=list(theSeries$Symbol, theSeries$Exchange), FUN=mean)
+  myAveraged$Symbol <- myAveraged$Group.1
+  myAveraged$Exchange <- myAveraged$Group.2
+    
+  myAveraged[myAveraged==0]<-NA ########### WHATT OR JUST EXCLudE?!?!?
+  if(any(!is.na(myAveraged$AverageDepth_Dollars))){
+    myFit <- lm(log10(Volume_Dollars) ~ log10(AverageDepth_Dollars), data = myAveraged)
+    myFitIntercept = summary(myFit)$coefficients[1]
+    myFitSlope = summary(myFit)$coefficients[2]
+    
+    ggplot(data=myAveraged, aes(x=AverageDepth_Dollars, y=Volume_Dollars, color=Symbol)) +
+      geom_point(alpha=.5, size=3) + 
+      scale_x_log10(limits = c(.1, myDepthLim), labels=comma) + scale_y_log10(limits = c(.1, myVolumeLim), labels=comma) +
+      geom_abline(intercept = 0, slope = 1, colour = "green", alpha=.5) +
+      geom_abline(intercept = myFitIntercept, slope = myFitSlope, colour = "red", alpha=.3) +
+      ggtitle(paste("Volume v. Depth (", myDepthStyle, " Method)", sep="")) + theme(plot.title = element_text(size=20, face="bold", vjust=2))
+    ggsave(file=myFileName, width = 12, height=10, dpi=100)
   }
 }
 
-setwd("C:/Users/tcho/Dropbox/Project - Platform Competition/")
 mySymbols = c("BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD", "TSLA", "NFLX")
-myOutputFolder <- paste(getwd(), '/Code/DepthVolume/output/', sep="")
+myOutputFolder <- paste(getwd(), '/DepthVolume/output/', sep="")
 
 theSeries <- retrieveGraphInputData(mySymbols)
 
+  
 createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""), 'Min')
 createPlotAnim(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Avg', '/', sep=""), 'Avg')
 createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""))
 createCoeffPlot(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Avg', '/', sep=""))
+createYearPlotPerSymbol(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Min', '/', sep=""), 'Min')
+createYearPlotPerSymbol(theSeries, paste(myOutputFolder, 'frames/', 'unfiltered/', 'Avg', '/', sep=""), 'Avg')
+
 theFilteredSeries <- theSeries[which(!(theSeries$Exchange %in% c("NSX", "CHX", "CBSX", "NASDAQ.PSX"))),]
 createPlotAnim(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""), 'Min')
 createPlotAnim(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""), 'Avg')
 createCoeffPlot(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""))
 createCoeffPlot(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""))
+createYearPlotPerSymbol(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Min', '/', sep=""), 'Min')
+createYearPlotPerSymbol(theFilteredSeries, paste(myOutputFolder, 'frames/', 'filtered/', 'Avg', '/', sep=""), 'Avg')
+
+
+
+createYearPlot(theSeries, 'Min', paste(myOutputFolder, 'rawScatter', '.png', sep=''))
+myIsNotWide <- !(theSeries$Symbol %in% c("GOOG", "NFLX", "RAD", "TSLA"))
+myIsNotRinkyDink <- !(theSeries$Exchange %in% c("NSX", "CHX", "CBSX", "NASDAQ.PSX"))
+createYearPlot(theSeries[which(myIsNotWide),], 'Min', paste(myOutputFolder, 'smallSymbols', '.png', sep=''))
+createYearPlot(theSeries[which(myIsNotRinkyDink),], 'Min', paste(myOutputFolder, 'bigExchanges', '.png', sep=''))
+createYearPlot(theSeries[which(myIsNotWide & myIsNotRinkyDink),], 'Min', paste(myOutputFolder, 'bigExchangesSmallSymbols', '.png', sep=''))
 
 
 

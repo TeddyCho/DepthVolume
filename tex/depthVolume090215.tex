@@ -1,0 +1,476 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{float}
+\begin{document}
+
+\title{Depth and Volume}
+
+\maketitle
+\vspace{.5pc}
+
+\section{Data}
+We use historical data from the NYSE Trade and Quote database\footnote{We note that this data is known to have inaccuracies regarding quotes' timestamps, and such issues may carry over to trade timestamps. These issues stem from timestamps originating from a secondary source (i.e., not the exchanges' order matching engines) and being derived after an exchange aggregation method which introduces further latency\footnote{See Budish, Cramton and Shim (2015) and Ding, Hanna and Hendershott (2014)}.}, made available by Wharton Research Data Services. The dataset ``contains intraday transactions data (trades and quotes) for all securities listed on the New York Stock Exchange (NYSE), American Stock Exchange (AMEX), as well as Nasdaq National Market System (NMS) and SmallCap issues''\footnote{See https://wrds-web.wharton.upenn.edu/wrds/ds/taq/index.cfm.}.\\
+
+Our data cover all trades for a sample of symbols\footnote{Our sample of symbols consists of AMD, BAC, C, GOOG, GRPN, JBLU, MSFT, and RAD. We would like to include BRKA and BRKB, but millisecond TAQ data does not exist for them. Strange.} over the period of Jan 1, 2014 - Dec 31, 2014. No time filtering is used, and we are left with a total of 249 trading days.\\
+
+\subsection{Trades Data}
+The trading data is organized as a sequential collection of trades, where a trade is defined as a transaction with a unique trade sequence number. A trade must be between no more than two parties, in one symbol, at one price, on one exchange, at one time.\\
+Since we filter out some special cases (trade corrections, duplicates, etc.), we will not go into that here.\footnote{www.nyxdata.com/doc/224904}\\
+
+\subsubsection{Trades Against One Counterparty}
+Alice buys 50 shares of GOOG for \$700 on NASDAQ at 11:00 against a corresponding quote of at least 50 shares. The trades data would show the following:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Symbol & Volume & Price & Exchange \\ \hline
+    11:00:00 & GOOG & 50 & \$700.00 & NASDAQ \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Trades Against Multiple Counterparties}
+Alice sells 50 shares of GOOG for \$700 on NASDAQ at 11:00, but the first-in-line quote is only big enough for 10 shares. The next two quotes, however, are of size 6 an 80, respectively, and so Alica can be accommodated by these three quotes. The trades data would show the following:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Symbol & Volume & Price & Exchange \\ \hline
+    11:00:00 & GOOG & 15 & \$700.00 & NASDAQ \\ \hline
+    11:00:00 & GOOG & 6 & \$700.00 & NASDAQ \\ \hline
+    11:00:00 & GOOG & 29 & \$700.00 & NASDAQ \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Trades On Multiple Exchanges}
+Alice sends a buy order 20 shares of GOOG for \$700 on NASDAQ and a buy order 30 shares of GOOG for \$700 on NYSE. Furthermore, the first-in-line quote on NYSE is only big enough for 1 share, but the next quote in the NYSE queue is for 100 shares. The trades data would show the following:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Symbol & Volume & Price & Exchange \\ \hline
+    11:00:00 & GOOG & 20 & \$700.00 & NASDAQ \\ \hline
+    11:00:00 & GOOG & 1 & \$700.00 & NYSE \\ \hline
+    11:00:00 & GOOG & 29 & \$700.00 & NYSE \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Trades At Multiple Prices}
+Alice sends a market buy order for 50 shares of GOOG on BATS BYX. The first-in-line quote is to sell 3 shares at \$700, and the next quote in the queue is for 16 shares at \$700.01. The next quote is for 19 shares at \$700.01, and the following quote is for 60 shares at \$700.03. The trades data would show the following:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Symbol & Volume & Price & Exchange \\ \hline
+    11:00:00 & GOOG & 3 & \$700.00 & BATS BYX \\ \hline
+    11:00:00 & GOOG & 16 & \$700.01 & BATS BYX \\ \hline
+    11:00:00 & GOOG & 19 & \$700.01 & BATS BYX \\ \hline
+    11:00:00 & GOOG & 12 & \$700.03 & BATS BYX \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Order Gets Routed}
+Alice sends a market sell order for 50 shares of GOOG on BATS BYX. The first-in-line quote is to buy 5 shares at \$700, and the next quote in the queue is for 60 shares at \$699.98. However, NASDAQ is the national best bid with a size of 1 share at \$699.99. By Reg NMS, Alice's sell order gets routed to NASDAQ and she sells 1 share for \$699.99. Now, the national best bid is the 60 shares at \$699.98 on BATS BYX. Alice's order transacts her remaining 44 shares against the 60 share bid on BATS BYX. The trades data would show the following:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Symbol & Volume & Price & Exchange \\ \hline
+    11:00:00 & GOOG & 5 & \$700.00 & BATS BYX \\ \hline
+    11:00:00 & GOOG & 1 & \$699.99 & NASDAQ \\ \hline
+    11:00:00 & GOOG & 44 & \$699.98 & BATS BYX \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Trades At Different Times}
+Alice buys 40 shares of GOOG for \$700 on BATS BYX at 11:00:00 against two orders of size 13 and 90, respectively. Bob then sells 10 shares of GOOG for \$699.97 on NASDAQ at 11:00:04. The trades data would show the following:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Symbol & Volume & Price & Exchange \\ \hline
+    11:00:00 & GOOG & 13 & \$700.00 & BATS BYX \\ \hline
+    11:00:00 & GOOG & 27 & \$700.00 & BATS BYX \\ \hline
+    11:00:04 & GOOG & 10 & \$699.99 & NASDAQ \\ 
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Quotes Data}
+The quotes data is organized as a sequential collection of quote updates, which only occur when the best bid/offer (BBO) has changed. These changes could be the result of a trade, a quote addition, a quote retraction, or a quote modification.\\
+The following scenarios are all for one symbol on one exchange, as their quotes data are independent of one another.\\
+
+\subsubsection{Nothing Happens}
+The market opens at 09:30 with a \$9.99 bid for 30 shares and a \$10.03 bid for 15 shares. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Improved Quotes}
+The market opens at 09:30 with a \$9.99 bid for 30 shares and a \$10.03 bid for 15 shares. At 09:44:00, a new \$10.00 bid for 2 shares enters the market. At 10:20:00, a new \$10.02 offer for 30 shares enters the market. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:44:00 & 2 & \$10.00 & \$10.03 & 15 \\ \hline
+    10:20:00 & 2 & \$10.00 & \$10.02 & 30 \\
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Joined Quotes}
+The market opens at 09:30 with a \$9.99 bid for 30 shares and a \$10.03 bid for 15 shares. At 09:48:00, a new \$9.99 bid for 20 shares enters the market, joining the existing bid for 30 shares. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:48:00 & 50 & \$9.99 & \$10.03 & 15 \\ 
+    \hline
+  \end{tabular}
+\end{center}
+\subsubsection{Retracted (or Traded) Quotes}
+The market opens at 09:30 with two \$9.99 bids for 10 and 20 shares, respectively, and a \$10.03 bid for 15 shares. At 09:33:00, the \$9.99 bid for 10 shares is retracted (or traded). At 09:34:00, the \$9.99 bid for 20 shares is retracted (or traded), and now the previously existing \$9.98 bid for 100 shares is the new best bid. This remains the BBO for the remainder of the day:
+\begin{center}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    Time & Bid Size & Bid & Offer & Offer Size \\ \hline
+    09:30:00 & 30 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:33:00 & 20 & \$9.99 & \$10.03 & 15 \\ \hline
+    09:34:00 & 100 & \$9.98 & \$10.03 & 15 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\section{Transforming Data}
+Each data point concerned a specific symbol $i$'s activity on a specific exchange $j$ for a specific date $t$.
+
+\subsection{Volume}
+Volume $Q_{ijt}$ is computed as the sum of the volumes $q$ of trades occurring between 10:00 and 15:30 in symbol $i$ on exchange $j$ on date $t$:\\
+$$Q_{ijt} = \sum_{q \in ijt} q$$
+
+\subsection{Depth}
+We begin by computing the depth of each quote update, indexed by $u$. We used two different methods.
+
+\subsubsection{Average Method}
+This method measures the quote update's depth $\overline{q_u}$ as the average of the size of the best bid $q_{bu}$ and the size of the best ask $q_{au}$:\\
+$$\overline{q_u} = \frac{q_{bu} + q_{au}}{2}.$$\\
+
+\subsubsection{Min Method}
+This method measures the quote update's depth $\overline{q_u}$ as the minimum between the size of the best bid size$q_{bu}$ and the size of the best ask $q_{au}$:\\
+$$\overline{q_u} = \min({q_{bu}, q_{au}}).$$\\
+
+\subsubsection{Combining All $\overline{q_u}$ Into One Measure}
+For each quote update $u$, we compute its duration $\Delta T_u$--that is, how long this quote update $u$ represents the state of the book. We do this by subtracting the timestamp $T_u$ of quote update $u$ from the timestamp $T_{u+1}$ of the next quote update $u+1$:\\
+$$\Delta T_u = T_{u+1} - T_u.$$\\
+To summarize the depth $\overline{d}_{ijt}$ between 10:00 and 15:30 in symbol $i$ on exchange $j$ on date $t$, we take the sum of $\overline{q_u}$ weighted by their corresponding $\Delta T_u$.\\
+$$\overline{d}_{ijt} = \sum_{u \in ijt} q_u \cdot\Delta T_u$$
+
+John mentioned how NASDAQ quotes effectively treat its different DMMs as different exchanges; make sure to do special logic for NASDAQ.
+
+\subsection{Summarizing}
+Due to wide heterogeneity in volumes between symbols, we take the logarithm of both depth and volume.\\
+
+We filter out data points with 0 depth, as this implies empty bids or asks. (Penalizing quotes past the NBBO should solve this problem.)\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/trends/TimeChartDollarShot}.png}
+\caption{The values of daily depth and volume are plotted against each other across symbols. The colors correspond to different exchanges.}
+\end{figure}
+
+Graphs are located in Dropbox\footnote{https://www.dropbox.com/sh/kxtlz8mb4lzfvgl/AAACcauEobiX21IBCM\_\_6IUja?dl=0}.\\
+
+From plotting the different symbols together, we observed that the depth v. volume relationship appeared to be segmented by symbol. Thus, the following analyses separates symbol.\\
+
+For each date $t$ and symbol $i$, we fit the regression model:\\
+$$\log{\overline{d}_{ijt}} = \alpha_{it} + \beta_{it} \cdot \log{Q_{ijt}} + \epsilon_{ijt}.$$\\
+
+We ran the above regressions for all 4 combinations of:
+\begin{itemize}
+\item Min or Average method of measuring depth
+\item Filtering or Unfiltering the four small exchanges (CBSX, CHX, NSX, NASDAQ PSX), as they account for less than \%5 of total volume.
+\end{itemize}
+
+\section{Results}
+
+Refer to the interactive graphs to view a time series of the regressions\footnote{
+~/Project - Platform Competition/Code/DepthVolume/output/frames/unfiltered/Avg/allDepthVolume\_\_\_.html\\
+~/Project - Platform Competition/Code/DepthVolume/output/frames/unfiltered/Min/allDepthVolume\_\_\_.html\\
+~/Project - Platform Competition/Code/DepthVolume/output/frames/filtered/Avg/allDepthVolume\_\_\_.html\\
+~/Project - Platform Competition/Code/DepthVolume/output/frames/filtered/Min/allDepthVolume\_\_\_.html}
+
+\subsection{Regression Coefficients}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/BetaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/BetaLines}.png}
+\caption{Slopes of unfiltered dataset.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/BetaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/BetaLines}.png}
+\caption{Slopes of filtered dataset (excluded CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/AlphaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/AlphaLines}.png}
+\caption{Intercepts of unfiltered dataset.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/AlphaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/AlphaLines}.png}
+\caption{Intercepts of filtered dataset (excluded CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}
+
+
+\subsection{Averaging Over The Year}
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/BAC/overAllTime}.png} 
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/C/overAllTime}.png}\\
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/JBLU/overAllTime}.png}\\
+\caption{Each point represents the average depth and average volume for a day in 2014. The data here uses the Min method for computing depth and filters out the four small exchanges (CBSX, CHX, NSX, and NASDAQ PSX). The green line is the 45 degree line passing through the origin and the red line is the aforementioned regression line.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/GOOG/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/GRPN/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/MSFT/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/NFLX/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/RAD/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/TSLA/overAllTime}.png}
+\caption{Each point represents the average depth and average volume for a day in 2014. The data here uses the Min method for computing depth and filters out the four small exchanges (CBSX, CHX, NSX, and NASDAQ PSX). The green line is the 45 degree line passing through the origin and the red line is the aforementioned regression line.}
+\end{figure}
+
+\subsection{Plotting Together}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/rawScatter}.png}
+\caption{All symbols. All exchanges.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/smallSymbols}.png}
+\caption{All symbols. Excluding small exchanges (i.e., CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/bigExchanges}.png}
+\caption{Excluding symbols with wide spreads (i.e., GOOG, NFLX, RAD, TSLA). All exchanges.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/bigExchangesSmallSymbols}.png}
+\caption{Excluding symbols with wide spreads (i.e., GOOG, NFLX, RAD, TSLA). Excluding small exchanges (i.e., CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}	
+
+
+\subsection{Curious Behavior}
+\subsubsection{Low Depth and High Volume in CHX}
+Refer to separate documentation\footnote{C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/tex/CHXNote.pdf}.
+
+We investigate the CHX points which occur in the top right region (low depth, high volume).
+
+For one such outlier, BAC on CHX on 10-Jan-2014, we open the individual trades.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/volumeByCondCHX}.png}
+\caption{In January, although trades with condition code 4 constituted less than 15\% of the trades, over 95\% of volume held this condition code.}
+\end{figure}
+
+
+Most interestingly, we observe two large trades with condition code 4, indicating "Derivatively Priced" trades. Online literature suggests that activity in Exchange Traded Products\footnote{http://www.investopedia.com/terms/e/exchange-traded-products-etp.asp} largely make up these trades, perhaps when different symbols are negotiated at a package price and the individual trades semi-arbitrarily take on parts of the cost.
+
+The fact that such trades are not considered to be a true "Last Sale''\footnote{http://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/utdfspecification.pdf} and are allowed outside of limit-up and limit-down prices\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands} strongly indicates that these trades' prices are not dictated by the BBO.
+
+As a response, all trades with condition code 4 were filtered out.
+
+\subsubsection{Flat Relationship of Volume v. Depth for BAC}
+This flat relationship could be attributable to the CHX outlier which hovered in the low-depth/high-volume region. Filtering out Derivatively Priced trades remedied this flatness.\\
+
+\subsubsection{GOOG: Different Volumes for Similar Depths}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/filtered/Avg/GOOG/36}.png}
+\caption{A sample date in GOOG exhibiting both low variability in depth, and BATS EDGA and BATS BYX pushing the regression line to a negative slope.}
+\end{figure}
+
+First we address the low variability in depth.\\
+
+Normally, a symbol will have a quote history like where spreads are mostly one tick wide, and exchanges have similar BBOs. Because of this, the differences between exchanges' depths are largely dictated by the size shown on the bid and offer.\\\\
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ & BID & OFR & OFRSIZ \\ \hline
+2014-01-27 10:44:37 & JBLU & T & 43 & 8.64 & 8.65 & 42 \\ \hline
+2014-01-27 10:44:37 & JBLU & B & 11 & 8.64 & 8.65 & 12 \\ \hline
+2014-01-27 10:44:37 & JBLU & P & 11 & 8.64 & 8.65 & 23 \\ \hline
+2014-01-27 10:44:37 & JBLU & Y & 3 & 8.64 & 8.65 & 5 \\ \hline
+2014-01-27 10:44:37 & JBLU & Y & 3 & 8.64 & 8.65 & 4 \\ \hline
+2014-01-27 10:44:37 & JBLU & A & 1 & 8.64 & 8.66 & 1 \\ \hline
+2014-01-27 10:44:37 & JBLU & A & 1 & 8.64 & 8.66 & 1 \\ \hline
+2014-01-27 10:44:37 & JBLU & X & 2 & 8.63 & 8.65 & 1 \\ \hline
+2014-01-27 10:44:37 & JBLU & Y & 3 & 8.64 & 8.65 & 3 \\ \hline
+2014-01-27 10:44:37 & JBLU & P & 11 & 8.64 & 8.65 & 18 \\ \hline
+2014-01-27 10:44:37 & JBLU & C & 5 & 8.63 & 8.65 & 2 \\ \hline
+2014-01-27 10:44:37 & JBLU & C & 5 & 8.63 & 8.65 & 1 \\
+\hline
+\end{tabular}\\
+
+
+On the other hand, GOOG's quote behavior is comprised of multiple tick-wide spreads, and there is much heterogeneity in the exchanges' BBOs. Because of this, the differences between exchanges' depths are not sufficiently captured by our current measure, since our measure does not take into account spread.\\
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ & BID & OFR & OFRSIZ \\ \hline
+2014-01-27 10:00:16 & GOOG & X & 1 & 1109.12 & 1114.25 & 1 \\ \hline
+2014-01-27 10:00:16 & GOOG & Y & 1 & 1110.9 & 1112.47 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & T & 2 & 1110.9 & 1113.35 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & P & 4 & 1110.21 & 1113.26 & 4 \\ \hline
+2014-01-27 10:00:17 & GOOG & Y & 1 & 1110.9 & 1113.27 & 6 \\ \hline
+2014-01-27 10:00:17 & GOOG & Y & 1 & 1110.9 & 1113.27 & 3 \\ \hline
+2014-01-27 10:00:17 & GOOG & Y & 1 & 1110.9 & 1159.74 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & K & 1 & 1110.9 & 1116.03 & 1 \\ \hline
+2014-01-27 10:00:17 & GOOG & J & 3 & 1110.4 & 1159.74 & 1 \\ 
+\hline
+\end{tabular}\\
+
+To further support this, we look include two more high-priced stocks, NFLX and TSLA. We observe wide, inconsistent spreads among their different exchanges' BBOs. Indeed, we see the same behavior in their slopes.\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/frames/filtered/Avg/NFLX/147}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Avg/TSLA/57}.png}
+\caption{A sample date in GOOG exhibiting both low variability in depth, and BATS EDGA and BATS BYX pushing the regression line to a negative slope.}
+\end{figure}
+
+
+Finally, we look at BYX's skewing of the slope, and we note interesting clumping of higher BBO sizes in BYX:\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/bidSizebyx}.png}
+\caption{Histogram of bid size, note the bump in BYX being at 7. Why?}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/spreadsByxhilite}.png}
+\caption{Histogram of spread, note large spread in BYX around 40. BYX has higher spreads. See if bump only happens on certain days or is always hinted at by data.}
+\end{figure}
+
+\subsubsection{Depth Inconsistency and its Consequences}
+In a stock like BAC, the book is typically one tick wide with volume on the order of dozens:\\
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ  & BID   & OFR & OFRSIZ \\ \hline 
+2014-03-20 10:02:00   & BAC & T  &   64& 17.51& 17.52&    257         \\ \hline 
+2014-03-20 10:02:00   & BAC & Z  &   19 &17.51& 17.52&    103         \\ \hline 
+2014-03-20 10:02:00   & BAC & P  &   73 &17.51& 17.52&    186         \\ \hline 
+2014-03-20 10:02:00   & BAC & K  &   33 &17.51& 17.52&    218         \\ \hline 
+2014-03-20 10:02:00   & BAC & N  &    6 &17.51 &17.52&    437         \\ \hline 
+\end{tabular}\\
+
+However, exchanges like CBSX, CHX, NSX, and NASDAQ PSX generally have wider spreads and significantly less size on their BBOs. This leads to their distance from the other exchanges in depth/volume space, and they exert a disproportionate amount of influence on the regression.\\
+
+Consider the following quotes from NSX\\
+
+\begin{tabular}{ | l | c | c | c | c | c | c |}
+\hline
+DATETIME & SYMBOL & EX & BIDSIZ  & BID   & OFR & OFRSIZ \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     2   \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     1   \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 &  0.00   &    0    \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.56  &     1    \\ \hline 
+2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.51  &     1    \\ \hline 
+2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.56  &     1 \\ \hline 
+\end{tabular}\\
+
+This sort of quote behavior is not present day-to-day, but gave us reason to run a separate version of our analyses without the four exchanges.\\
+
+
+\subsection{Aggregate Results}
+
+We do a similar analysis of depth vs. volume for all stocks traded at US exchanges in 2014. We look at the average volume and depth of each stock-exchange pair for year 2014. Figure 17 shows that though a fitted line has a slope close to 1, the data is very noisy. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolAll}.png}
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolNoS}.png}
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolNoH}.png}
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolNoSH}.png}
+\caption{Average Volume vs Depth for all exchange-symbol pairs in 2014}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolTop100}.png}
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolTop100NoS}.png}
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolSP500}.png}
+\includegraphics[width=75mm]{{./../output/Rplots/depthVolSP500NoS}.png}
+\caption{Average Volume vs Depth for 100 most traded symbols and SP500 symbols in 2014}
+\end{figure}
+
+
+Instead we also look at individual regression results by running separate regressions on each symbol. The results are shown in Figure 18 with a histogram of the coefficients. We see that the distribution of the coefficients is centered at around 1 (a little smaller than 1 to be precise). However, the distribution is quite spread out including coefficients with varying sizes. The below histograms leave out a few major outliers to better examine the overall distribution of the coefficients. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/Rplots/myCoef}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefMin}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefNoS}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefMinNoS}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefNoH}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefMinNoH}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefNoSH}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/myCoefMinNoSH}.png}
+\caption{histogram of regression coefficients for each symbol}
+\end{figure}
+
+\subsubsection{Grouping stocks according to trade volumes}
+
+To filter out some noise introduced by many of the tiny stocks that are rarely traded, we divide up the stocks according to the average trade volume size. We see that the majority of the huge outliers are in the bottom 50 of the stocks. However, when we look at 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/Rplots/hist25}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist25NoS}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist50}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist50NoS}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist75}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist75NoS}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist100}.png}
+\includegraphics[width=60mm]{{./../output/Rplots/hist100NoS}.png}
+\caption{histogram of regression coefficients for each symbol divided into 4 different groups according to size of average dollar volume}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=80mm]{{./../output/Rplots/histSP500}.png}
+\includegraphics[width=80mm]{{./../output/Rplots/histSP500NoS}.png}
+\caption{histogram of regression coefficients for each symbol in SP500}
+\end{figure}
+
+
+\subsubsection{Outliers}
+As seen from above, there are quite a few stocks that have very large coefficient (both positive and negative). We examine these points further by looking at them individually. We find that a lot of these stocks or ETFs didn't start trading until mid-2014 or in some cases very late 2014. We also note a lot of these symbols are much longer than their root symbol, because the symbol suffix is concatenated at the end.  \\
+
+\begin{center}
+\begin{tabular}{ | l | c | c | c | c |}
+\hline
+SYMBOL & Coefficient & Coefficient w/ small ex & Interesting notes \\ \hline 
+FIA  & 28.01331  & 28.01331  & Inception date: 10/02/14\\ \hline
+QMEX & 8.632723 & 8.632723 & Inception date: 09/18/2014\\ \hline
+NTCPRCCL & 4.999066  &  6.862475 & NTC + PRC + CL \\ \hline
+NNCPRDCL & 48.69038 & 48.69038 & NNC + PRD + CL \\ \hline
+NKGPRECL & -3.313039 & -3.313039 & NKG + PRE + CL \\ \hline  
+EQAL & -8.548768 & -8.548768 & Inception date:12/29/2014 \\ \hline  
+LMCK & -2.649591 & -1.304568 & Inception date: 07/11/2014\\ \hline
+\end{tabular}\\
+\end{center}
+
+\end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  27 AUG 2015 12:55
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  31 AUG 2015 17:09
 entering extended mode
 **C:/Users/tcho/Dropbox/Project*-*Platform*Competition/Code/DepthVolume/tex/dep
 thVolume.tex
@@ -218,200 +218,396 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 189.
 
-<./../output/frames/unfiltered/Min/BetaHistograms.png, id=31, 867.24pt x 722.7p
-t>
+Overfull \hbox (79.96385pt too wide) in paragraph at lines 199--199
+[][] \OT1/cmr/m/n/8 /Project - Plat-form Com-pe-ti-tion/Code/DepthVolume/output
+/frames/unfiltered/Avg/allDepthVolume[][][].html 
+ []
+
+
+Overfull \hbox (62.53859pt too wide) in paragraph at lines 199--199
+\OT1/cmr/m/n/8 /Project - Plat-form Com-pe-ti-tion/Code/DepthVolume/output/fram
+es/unfiltered/Min/allDepthVolume[][][].html 
+ []
+
+
+Overfull \hbox (53.33012pt too wide) in paragraph at lines 199--199
+\OT1/cmr/m/n/8 /Project - Plat-form Com-pe-ti-tion/Code/DepthVolume/output/fram
+es/filtered/Avg/allDepthVolume[][][].html 
+ []
+
+
+Overfull \hbox (53.09401pt too wide) in paragraph at lines 199--199
+\OT1/cmr/m/n/8 /Project - Plat-form Com-pe-ti-tion/Code/DepthVolume/output/fram
+es/filtered/Min/allDepthVolume[][][].html| 
+ []
+
+
+<./../output/frames/unfiltered/Min/BetaHistograms.png, id=31, 3613.5pt x 3011.2
+5pt>
 File: ./../output/frames/unfiltered/Min/BetaHistograms.png Graphic file (type p
 ng)
  <use ./../output/frames/unfiltered/Min/BetaHistograms.png>
 Package pdftex.def Info: ./../output/frames/unfiltered/Min/BetaHistograms.png u
-sed on input line 195.
-(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+sed on input line 205.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
 
-<./../output/frames/unfiltered/Min/BetaLines.png, id=32, 867.24pt x 722.7pt>
+<./../output/frames/unfiltered/Min/BetaLines.png, id=33, 3613.5pt x 3011.25pt>
 File: ./../output/frames/unfiltered/Min/BetaLines.png Graphic file (type png)
 
 <use ./../output/frames/unfiltered/Min/BetaLines.png>
 Package pdftex.def Info: ./../output/frames/unfiltered/Min/BetaLines.png used o
-n input line 196.
-(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+n input line 206.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
 
-<./../output/frames/filtered/Avg/BetaHistograms.png, id=33, 867.24pt x 722.7pt>
-File: ./../output/frames/filtered/Avg/BetaHistograms.png Graphic file (type png
+<./../output/frames/filtered/Min/BetaHistograms.png, id=34, 3613.5pt x 3011.25p
+t>
+File: ./../output/frames/filtered/Min/BetaHistograms.png Graphic file (type png
 )
-<use ./../output/frames/filtered/Avg/BetaHistograms.png>
-Package pdftex.def Info: ./../output/frames/filtered/Avg/BetaHistograms.png use
-d on input line 201.
-(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+ <use ./../output/frames/filtered/Min/BetaHistograms.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/BetaHistograms.png use
+d on input line 211.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
 
-<./../output/frames/filtered/Avg/BetaLines.png, id=34, 867.24pt x 722.7pt>
-File: ./../output/frames/filtered/Avg/BetaLines.png Graphic file (type png)
+<./../output/frames/filtered/Min/BetaLines.png, id=35, 3613.5pt x 3011.25pt>
+File: ./../output/frames/filtered/Min/BetaLines.png Graphic file (type png)
 
-<use ./../output/frames/filtered/Avg/BetaLines.png>
-Package pdftex.def Info: ./../output/frames/filtered/Avg/BetaLines.png used on 
-input line 202.
-(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+<use ./../output/frames/filtered/Min/BetaLines.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/BetaLines.png used on 
+input line 212.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
  [6 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
 ut/trends/TimeChartDollarShot.png>]
-Overfull \vbox (44.00752pt too high) has occurred while \output is active []
+Overfull \vbox (73.75505pt too high) has occurred while \output is active []
 
 
 [7 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
 t/frames/unfiltered/Min/BetaHistograms.png> <C:/Users/tcho/Dropbox/Project - Pl
 atform Competition/Code/DepthVolume/output/frames/unfiltered/Min/BetaLines.png>
 ]
-Overfull \vbox (44.56308pt too high) has occurred while \output is active []
+<./../output/frames/unfiltered/Min/AlphaHistograms.png, id=45, 3613.5pt x 3011.
+25pt>
+File: ./../output/frames/unfiltered/Min/AlphaHistograms.png Graphic file (type 
+png)
+ <use ./../output/frames/unfiltered/Min/AlphaHistograms.png>
+Package pdftex.def Info: ./../output/frames/unfiltered/Min/AlphaHistograms.png 
+used on input line 217.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
+
+<./../output/frames/unfiltered/Min/AlphaLines.png, id=46, 3613.5pt x 3011.25pt>
+File: ./../output/frames/unfiltered/Min/AlphaLines.png Graphic file (type png)
+<use ./../output/frames/unfiltered/Min/AlphaLines.png>
+Package pdftex.def Info: ./../output/frames/unfiltered/Min/AlphaLines.png used 
+on input line 218.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
+
+Overfull \vbox (56.51898pt too high) has occurred while \output is active []
 
 
 [8 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
-t/frames/filtered/Avg/BetaHistograms.png> <C:/Users/tcho/Dropbox/Project - Plat
-form Competition/Code/DepthVolume/output/frames/filtered/Avg/BetaLines.png>]
-<./../output/bacmsftjancount.png, id=49, 670.505pt x 602.25pt>
-File: ./../output/bacmsftjancount.png Graphic file (type png)
+t/frames/filtered/Min/BetaHistograms.png> <C:/Users/tcho/Dropbox/Project - Plat
+form Competition/Code/DepthVolume/output/frames/filtered/Min/BetaLines.png>]
+<./../output/frames/filtered/Min/AlphaHistograms.png, id=52, 3613.5pt x 3011.25
+pt>
+File: ./../output/frames/filtered/Min/AlphaHistograms.png Graphic file (type pn
+g)
+ <use ./../output/frames/filtered/Min/AlphaHistograms.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/AlphaHistograms.png us
+ed on input line 223.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
 
-<use ./../output/bacmsftjancount.png>
-Package pdftex.def Info: ./../output/bacmsftjancount.png used on input line 215
+<./../output/frames/filtered/Min/AlphaLines.png, id=53, 3613.5pt x 3011.25pt>
+File: ./../output/frames/filtered/Min/AlphaLines.png Graphic file (type png)
+
+<use ./../output/frames/filtered/Min/AlphaLines.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/AlphaLines.png used on
+ input line 224.
+(pdftex.def)             Requested size: 341.43306pt x 284.50949pt.
+
+Overfull \vbox (43.96342pt too high) has occurred while \output is active []
+
+
+[9 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
+t/frames/unfiltered/Min/AlphaHistograms.png> <C:/Users/tcho/Dropbox/Project - P
+latform Competition/Code/DepthVolume/output/frames/unfiltered/Min/AlphaLines.pn
+g>]
+Overfull \vbox (56.51898pt too high) has occurred while \output is active []
+
+
+[10 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/frames/filtered/Min/AlphaHistograms.png> <C:/Users/tcho/Dropbox/Project - Pl
+atform Competition/Code/DepthVolume/output/frames/filtered/Min/AlphaLines.png>]
+
+<./../output/frames/filtered/Min/BAC/overAllTime.png, id=64, 1204.5pt x 1003.75
+pt>
+File: ./../output/frames/filtered/Min/BAC/overAllTime.png Graphic file (type pn
+g)
+ <use ./../output/frames/filtered/Min/BAC/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/BAC/overAllTime.png us
+ed on input line 232.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/C/overAllTime.png, id=65, 1204.5pt x 1003.75pt
+>
+File: ./../output/frames/filtered/Min/C/overAllTime.png Graphic file (type png)
+
+ <use ./../output/frames/filtered/Min/C/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/C/overAllTime.png used
+ on input line 233.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/JBLU/overAllTime.png, id=66, 1204.5pt x 1003.7
+5pt>
+File: ./../output/frames/filtered/Min/JBLU/overAllTime.png Graphic file (type p
+ng)
+ <use ./../output/frames/filtered/Min/JBLU/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/JBLU/overAllTime.png u
+sed on input line 234.
+(pdftex.def)             Requested size: 341.43306pt x 284.52481pt.
+
+<./../output/frames/filtered/Min/GOOG/overAllTime.png, id=67, 1204.5pt x 1003.7
+5pt>
+File: ./../output/frames/filtered/Min/GOOG/overAllTime.png Graphic file (type p
+ng)
+ <use ./../output/frames/filtered/Min/GOOG/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/GOOG/overAllTime.png u
+sed on input line 240.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/GRPN/overAllTime.png, id=68, 1204.5pt x 1003.7
+5pt>
+File: ./../output/frames/filtered/Min/GRPN/overAllTime.png Graphic file (type p
+ng)
+ <use ./../output/frames/filtered/Min/GRPN/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/GRPN/overAllTime.png u
+sed on input line 241.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/MSFT/overAllTime.png, id=69, 1204.5pt x 1003.7
+5pt>
+File: ./../output/frames/filtered/Min/MSFT/overAllTime.png Graphic file (type p
+ng)
+ <use ./../output/frames/filtered/Min/MSFT/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/MSFT/overAllTime.png u
+sed on input line 242.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/NFLX/overAllTime.png, id=70, 1204.5pt x 1003.7
+5pt>
+File: ./../output/frames/filtered/Min/NFLX/overAllTime.png Graphic file (type p
+ng)
+ <use ./../output/frames/filtered/Min/NFLX/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/NFLX/overAllTime.png u
+sed on input line 243.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/RAD/overAllTime.png, id=71, 1204.5pt x 1003.75
+pt>
+File: ./../output/frames/filtered/Min/RAD/overAllTime.png Graphic file (type pn
+g)
+ <use ./../output/frames/filtered/Min/RAD/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/RAD/overAllTime.png us
+ed on input line 244.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+
+<./../output/frames/filtered/Min/TSLA/overAllTime.png, id=72, 1204.5pt x 1003.7
+5pt>
+File: ./../output/frames/filtered/Min/TSLA/overAllTime.png Graphic file (type p
+ng)
+ <use ./../output/frames/filtered/Min/TSLA/overAllTime.png>
+Package pdftex.def Info: ./../output/frames/filtered/Min/TSLA/overAllTime.png u
+sed on input line 245.
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+ [11 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/frames/filtered/Min/BAC/overAllTime.png> <C:/Users/tcho/Dropbox/Project - P
+latform Competition/Code/DepthVolume/output/frames/filtered/Min/C/overAllTime.p
+ng> <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/frames/filtered/Min/JBLU/overAllTime.png>]
+<./../output/rawScatter.png, id=79, 1204.5pt x 1003.75pt>
+File: ./../output/rawScatter.png Graphic file (type png)
+
+<use ./../output/rawScatter.png>
+Package pdftex.def Info: ./../output/rawScatter.png used on input line 252.
+(pdftex.def)             Requested size: 341.43306pt x 284.52481pt.
+
+<./../output/smallSymbols.png, id=80, 1204.5pt x 1003.75pt>
+File: ./../output/smallSymbols.png Graphic file (type png)
+
+<use ./../output/smallSymbols.png>
+Package pdftex.def Info: ./../output/smallSymbols.png used on input line 257.
+(pdftex.def)             Requested size: 341.43306pt x 284.52481pt.
+ [12 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/frames/filtered/Min/GOOG/overAllTime.png> <C:/Users/tcho/Dropbox/Project - 
+Platform Competition/Code/DepthVolume/output/frames/filtered/Min/GRPN/overAllTi
+me.png> <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/
+output/frames/filtered/Min/MSFT/overAllTime.png> <C:/Users/tcho/Dropbox/Project
+ - Platform Competition/Code/DepthVolume/output/frames/filtered/Min/NFLX/overAl
+lTime.png> <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolu
+me/output/frames/filtered/Min/RAD/overAllTime.png> <C:/Users/tcho/Dropbox/Proje
+ct - Platform Competition/Code/DepthVolume/output/frames/filtered/Min/TSLA/over
+AllTime.png>]
+<./../output/bigExchanges.png, id=90, 1204.5pt x 1003.75pt>
+File: ./../output/bigExchanges.png Graphic file (type png)
+
+<use ./../output/bigExchanges.png>
+Package pdftex.def Info: ./../output/bigExchanges.png used on input line 262.
+(pdftex.def)             Requested size: 341.43306pt x 284.52481pt.
+ [13 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/rawScatter.png>]
+<./../output/bigExchangesSmallSymbols.png, id=96, 1204.5pt x 1003.75pt>
+File: ./../output/bigExchangesSmallSymbols.png Graphic file (type png)
+
+<use ./../output/bigExchangesSmallSymbols.png>
+Package pdftex.def Info: ./../output/bigExchangesSmallSymbols.png used on input
+ line 267.
+(pdftex.def)             Requested size: 341.43306pt x 284.52481pt.
+ [14 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/smallSymbols.png>] [15 <C:/Users/tcho/Dropbox/Project - Platform Competitio
+n/Code/DepthVolume/output/bigExchanges.png>]
+Overfull \hbox (29.02206pt too wide) in paragraph at lines 274--274
+[][]\OT1/cmr/m/n/8 C:/Users/tcho/Dropbox/Project - Plat-form Com-pe-ti-tion/Cod
+e/DepthVolume/tex/CHXNote.pdf| 
+ []
+
+<./../output/volumeByCondCHX.png, id=105, 867.24pt x 722.7pt>
+File: ./../output/volumeByCondCHX.png Graphic file (type png)
+
+<use ./../output/volumeByCondCHX.png>
+Package pdftex.def Info: ./../output/volumeByCondCHX.png used on input line 282
 .
-(pdftex.def)             Requested size: 170.71652pt x 153.33737pt.
-
-<./../output/bacmsftjan.png, id=50, 670.505pt x 602.25pt>
-File: ./../output/bacmsftjan.png Graphic file (type png)
-
-<use ./../output/bacmsftjan.png>
-Package pdftex.def Info: ./../output/bacmsftjan.png used on input line 216.
-(pdftex.def)             Requested size: 170.71652pt x 153.33737pt.
-
-Overfull \hbox (31.10403pt too wide) in paragraph at lines 223--223
+(pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
+ [16 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/bigExchangesSmallSymbols.png>]
+Overfull \hbox (31.10403pt too wide) in paragraph at lines 289--289
 [][]\OT1/cmr/m/n/8 http://www.nasdaqtrader.com/content/technicalsupport/specifi
 cations/utp/utdfspecification.pdf| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
+Underfull \hbox (badness 10000) in paragraph at lines 289--289
 [][]\OT1/cmr/m/n/8 http://www.finra.org/industry/trf/trade-report-modifiers-and
 -applicability-limit-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
 
  []
 
-<./../output/frames/filtered/Avg/GOOG/36.png, id=51, 867.24pt x 722.7pt>
+<./../output/frames/filtered/Avg/GOOG/36.png, id=110, 1204.5pt x 1003.75pt>
 File: ./../output/frames/filtered/Avg/GOOG/36.png Graphic file (type png)
 
 <use ./../output/frames/filtered/Avg/GOOG/36.png>
 Package pdftex.def Info: ./../output/frames/filtered/Avg/GOOG/36.png used on in
-put line 233.
-(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
- [9 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
-ut/bacmsftjancount.png> <C:/Users/tcho/Dropbox/Project - Platform Competition/C
-ode/DepthVolume/output/bacmsftjan.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
+put line 299.
+(pdftex.def)             Requested size: 341.43306pt x 284.52481pt.
+ [17 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+put/volumeByCondCHX.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 303--304
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--257
+Underfull \hbox (badness 10000) in paragraph at lines 305--323
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--257
+Underfull \hbox (badness 10000) in paragraph at lines 305--323
 
  []
 
-[10 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
-ut/frames/filtered/Avg/GOOG/36.png (PNG copy)>]
-Overfull \hbox (18.30627pt too wide) in paragraph at lines 259--274
+[18 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/frames/filtered/Avg/GOOG/36.png>]
+Overfull \hbox (18.30627pt too wide) in paragraph at lines 325--340
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 259--274
+Underfull \hbox (badness 10000) in paragraph at lines 325--340
 
  []
 
-<./../output/frames/filtered/Avg/NFLX/147.png, id=60, 867.24pt x 722.7pt>
+<./../output/frames/filtered/Avg/NFLX/147.png, id=119, 867.24pt x 722.7pt>
 File: ./../output/frames/filtered/Avg/NFLX/147.png Graphic file (type png)
 
 <use ./../output/frames/filtered/Avg/NFLX/147.png>
 Package pdftex.def Info: ./../output/frames/filtered/Avg/NFLX/147.png used on i
-nput line 278.
+nput line 344.
 (pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
 
-<./../output/frames/filtered/Avg/TSLA/57.png, id=61, 867.24pt x 722.7pt>
+<./../output/frames/filtered/Avg/TSLA/57.png, id=120, 867.24pt x 722.7pt>
 File: ./../output/frames/filtered/Avg/TSLA/57.png Graphic file (type png)
 
 <use ./../output/frames/filtered/Avg/TSLA/57.png>
 Package pdftex.def Info: ./../output/frames/filtered/Avg/TSLA/57.png used on in
-put line 279.
+put line 345.
 (pdftex.def)             Requested size: 170.71652pt x 142.25475pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 275--281
+Underfull \hbox (badness 10000) in paragraph at lines 341--347
 
  []
 
-[11] <./../output/bidSizebyx.png, id=65, 670.505pt x 602.25pt>
+[19] <./../output/bidSizebyx.png, id=125, 670.505pt x 602.25pt>
 File: ./../output/bidSizebyx.png Graphic file (type png)
 
 <use ./../output/bidSizebyx.png>
-Package pdftex.def Info: ./../output/bidSizebyx.png used on input line 287.
+Package pdftex.def Info: ./../output/bidSizebyx.png used on input line 353.
 (pdftex.def)             Requested size: 341.43306pt x 306.67476pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--289
+Underfull \hbox (badness 10000) in paragraph at lines 350--355
 
  []
 
-<./../output/spreadsByxhilite.png, id=66, 670.505pt x 602.25pt>
+<./../output/spreadsByxhilite.png, id=126, 670.505pt x 602.25pt>
 File: ./../output/spreadsByxhilite.png Graphic file (type png)
 
 <use ./../output/spreadsByxhilite.png>
-Package pdftex.def Info: ./../output/spreadsByxhilite.png used on input line 29
-2.
+Package pdftex.def Info: ./../output/spreadsByxhilite.png used on input line 35
+8.
 (pdftex.def)             Requested size: 341.43306pt x 306.67476pt.
- [12 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
+ [20 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/out
 put/frames/filtered/Avg/NFLX/147.png (PNG copy)> <C:/Users/tcho/Dropbox/Project
  - Platform Competition/Code/DepthVolume/output/frames/filtered/Avg/TSLA/57.png
- (PNG copy)>] [13 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/De
+ (PNG copy)>] [21 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/De
 pthVolume/output/bidSizebyx.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 297--307
+Underfull \hbox (badness 10000) in paragraph at lines 363--373
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
+Underfull \hbox (badness 10000) in paragraph at lines 374--375
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--311
+Underfull \hbox (badness 10000) in paragraph at lines 376--377
 
  []
 
-[14 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+[22 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
 ut/spreadsByxhilite.png>]
-Overfull \hbox (8.86174pt too wide) in paragraph at lines 312--322
+Overfull \hbox (8.86174pt too wide) in paragraph at lines 378--388
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 312--322
+Underfull \hbox (badness 10000) in paragraph at lines 378--388
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--324
+Underfull \hbox (badness 10000) in paragraph at lines 389--390
 
  []
 
-[15]
+[23]
 ("C:\Users\tcho\Dropbox\Project - Platform Competition\Code\DepthVolume\tex\dep
 thVolume.aux") ) 
 Here is how much of TeX's memory you used:
- 1274 strings out of 493921
- 18683 string characters out of 3147286
+ 1353 strings out of 493921
+ 22491 string characters out of 3147286
  76321 words of memory out of 3000000
- 4585 multiletter control sequences out of 15000+200000
+ 4649 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  27i,10n,19p,970b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -427,9 +623,9 @@ onts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
 r7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
 /Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program
  Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on depthVolume.pdf (15 pages, 845285 bytes).
+Output written on depthVolume.pdf (23 pages, 7222797 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
+ 182 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 141 words of extra memory for PDF output out of 10000 (max. 10000000)
 

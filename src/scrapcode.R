@@ -1,6 +1,3 @@
-
-
-
 createDancingBubblePlot(theSeries, "_BAC_GOOG_min")
 mapSymbolToColor <- function(aSymbol){
   mySymbols = c("AMD", "BAC", "C", "GOOG", "GRPN", "JBLU", "MSFT", "RAD")

@@ -166,7 +166,7 @@ $$\overline{d}_{ijt} = \sum_{u \in ijt} q_u \cdot\Delta T_u$$
 
 John mentioned how NASDAQ quotes effectively treat its different DMMs as different exchanges; make sure to do special logic for NASDAQ.
 
-\section{Results}
+\subsection{Summarizing}
 Due to wide heterogeneity in volumes between symbols, we take the logarithm of both depth and volume.\\
 
 We filter out data points with 0 depth, as this implies empty bids or asks. (Penalizing quotes past the NBBO should solve this problem.)\\
@@ -190,30 +190,96 @@ We ran the above regressions for all 4 combinations of:
 \item Filtering or Unfiltering the four small exchanges (CBSX, CHX, NSX, NASDAQ PSX), as they account for less than \%5 of total volume.
 \end{itemize}
 
+\section{Results}
+
+Refer to the interactive graphs to view a time series of the regressions\footnote{
+~/Project - Platform Competition/Code/DepthVolume/output/frames/unfiltered/Avg/allDepthVolume\_\_\_.html\\
+~/Project - Platform Competition/Code/DepthVolume/output/frames/unfiltered/Min/allDepthVolume\_\_\_.html\\
+~/Project - Platform Competition/Code/DepthVolume/output/frames/filtered/Avg/allDepthVolume\_\_\_.html\\
+~/Project - Platform Competition/Code/DepthVolume/output/frames/filtered/Min/allDepthVolume\_\_\_.html}
+
+\subsection{Regression Coefficients}
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/BetaHistograms}.png}
 \includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/BetaLines}.png}
-\caption{Unfiltered dataset.}
+\caption{Slopes of unfiltered dataset.}
 \end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{{./../output/frames/filtered/Avg/BetaHistograms}.png}
-\includegraphics[width=120mm]{{./../output/frames/filtered/Avg/BetaLines}.png}
-\caption{Filtered dataset (excluded CBSX, CHX, NSX, NASDAQ PSX).}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/BetaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/BetaLines}.png}
+\caption{Slopes of filtered dataset (excluded CBSX, CHX, NSX, NASDAQ PSX).}
 \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/AlphaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/unfiltered/Min/AlphaLines}.png}
+\caption{Intercepts of unfiltered dataset.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/AlphaHistograms}.png}
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/AlphaLines}.png}
+\caption{Intercepts of filtered dataset (excluded CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}
+
+
+\subsection{Averaging Over The Year}
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/BAC/overAllTime}.png} 
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/C/overAllTime}.png}\\
+\includegraphics[width=120mm]{{./../output/frames/filtered/Min/JBLU/overAllTime}.png}\\
+\caption{Each point represents the average depth and average volume for a day in 2014. The data here uses the Min method for computing depth and filters out the four small exchanges (CBSX, CHX, NSX, and NASDAQ PSX). The green line is the 45 degree line passing through the origin and the red line is the aforementioned regression line.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/GOOG/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/GRPN/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/MSFT/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/NFLX/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/RAD/overAllTime}.png}
+\includegraphics[width=60mm]{{./../output/frames/filtered/Min/TSLA/overAllTime}.png}
+\caption{Each point represents the average depth and average volume for a day in 2014. The data here uses the Min method for computing depth and filters out the four small exchanges (CBSX, CHX, NSX, and NASDAQ PSX). The green line is the 45 degree line passing through the origin and the red line is the aforementioned regression line.}
+\end{figure}
+
+\subsection{Plotting Together}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/rawScatter}.png}
+\caption{All symbols. All exchanges.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/smallSymbols}.png}
+\caption{All symbols. Excluding small exchanges (i.e., CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/bigExchanges}.png}
+\caption{Excluding symbols with wide spreads (i.e., GOOG, NFLX, RAD, TSLA). All exchanges.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/bigExchangesSmallSymbols}.png}
+\caption{Excluding symbols with wide spreads (i.e., GOOG, NFLX, RAD, TSLA). Excluding small exchanges (i.e., CBSX, CHX, NSX, NASDAQ PSX).}
+\end{figure}	
+
 
 \subsection{Curious Behavior}
 \subsubsection{Low Depth and High Volume in CHX}
+Refer to separate documentation\footnote{C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/tex/CHXNote.pdf}.
+
 We investigate the CHX points which occur in the top right region (low depth, high volume).
 
-For one such outlier, BAC on CHX on 10-Jan-2014, we open the individual trades:
-[[TRADE DATA OF ALL CHX TRADES IN BAC ON JAN 10]]
+For one such outlier, BAC on CHX on 10-Jan-2014, we open the individual trades.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=60mm]{{./../output/bacmsftjancount}.png}
-\includegraphics[width=60mm]{{./../output/bacmsftjan}.png}
+\includegraphics[width=60mm]{{./../output/volumeByCondCHX}.png}
 \caption{In January, although trades with condition code 4 constituted less than 15\% of the trades, over 95\% of volume held this condition code.}
 \end{figure}
 
@@ -312,11 +378,11 @@ Consider the following quotes from NSX\\
 \begin{tabular}{ | l | c | c | c | c | c | c |}
 \hline
 DATETIME & SYMBOL & EX & BIDSIZ  & BID   & OFR & OFRSIZ \\ \hline 
-2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     2     \\ \hline 
-2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     1        \\ \hline 
-2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 &  0.00   &    0         \\ \hline 
-2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.56  &     1         \\ \hline 
-2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.51  &     1         \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     2   \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.52  &     1   \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 &  0.00   &    0    \\ \hline 
+2014-03-20 10:02:07  &   BAC &  C  &     1 & 17.5 & 17.56  &     1    \\ \hline 
+2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.51  &     1    \\ \hline 
 2014-03-20 10:02:08  &   BAC &  C  &     1 & 17.5 & 17.56  &     1 \\ \hline 
 \end{tabular}\\
 

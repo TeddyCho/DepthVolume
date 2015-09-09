@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  27 AUG 2015 15:55
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.5)  9 SEP 2015 10:28
 entering extended mode
 **C:/Users/tcho/Dropbox/Project*-*Platform*Competition/Code/DepthVolume/tex/CHX
 Note.tex
@@ -111,56 +111,117 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 LaTeX Warning: No \author given.
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--14
+
+ []
+
+<./../output/perDayScatterDollarLogExch.png, id=1, 753.31438pt x 445.16313pt>
+File: ./../output/perDayScatterDollarLogExch.png Graphic file (type png)
+
+<use ./../output/perDayScatterDollarLogExch.png>
+Package pdftex.def Info: ./../output/perDayScatterDollarLogExch.png used on inp
+ut line 17.
+(pdftex.def)             Requested size: 341.43306pt x 201.7616pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 21--22
+
+ []
+
+[1
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/tcho/Dropbox/Pro
+ject - Platform Competition/Code/DepthVolume/output/perDayScatterDollarLogExch.
+png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 13.
+(Font)              <7> on input line 23.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 13.
-<./../output/bacmsftjancount.png, id=1, 670.505pt x 602.25pt>
-File: ./../output/bacmsftjancount.png Graphic file (type png)
+(Font)              <5> on input line 23.
 
-<use ./../output/bacmsftjancount.png>
-Package pdftex.def Info: ./../output/bacmsftjancount.png used on input line 29.
+Underfull \hbox (badness 10000) in paragraph at lines 23--41
 
-(pdftex.def)             Requested size: 170.71652pt x 153.33737pt.
-
-<./../output/bacmsftjan.png, id=2, 670.505pt x 602.25pt>
-File: ./../output/bacmsftjan.png Graphic file (type png)
-
-<use ./../output/bacmsftjan.png>
-Package pdftex.def Info: ./../output/bacmsftjan.png used on input line 30.
-(pdftex.def)             Requested size: 170.71652pt x 153.33737pt.
- [1
-
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Overfull \hbox (31.10403pt too wide) in paragraph at lines 36--36
-[][]\OT1/cmr/m/n/8 http://www.nasdaqtrader.com/content/technicalsupport/specifi
-cations/utp/utdfspecification.pdf| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
+
+ []
+
+
+Overfull \hbox (42.3114pt too wide) in paragraph at lines 46--46
+[][]\OT1/cmr/m/n/8 https://www.nasdaqtrader.com/content/technicalsupport/specif
+ications/utp/611BTrade[]Matrix.pdf| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
 [][]\OT1/cmr/m/n/8 http://www.finra.org/industry/trf/trade-report-modifiers-and
 -applicability-limit-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 45--47
 
  []
 
-[2 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
-t/bacmsftjancount.png> <C:/Users/tcho/Dropbox/Project - Platform Competition/Co
-de/DepthVolume/output/bacmsftjan.png>]
+
+Overfull \hbox (31.10403pt too wide) in paragraph at lines 48--48
+[][]\OT1/cmr/m/n/8 http://www.nasdaqtrader.com/content/technicalsupport/specifi
+cations/utp/utdfspecification.pdf| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--48
+[][]\OT1/cmr/m/n/8 http://www.finra.org/industry/trf/trade-report-modifiers-and
+-applicability-limit-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--49
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
+
+ []
+
+[2] <./../output/volumeByCondCHX.png, id=16, 867.24pt x 722.7pt>
+File: ./../output/volumeByCondCHX.png Graphic file (type png)
+
+<use ./../output/volumeByCondCHX.png>
+Package pdftex.def Info: ./../output/volumeByCondCHX.png used on input line 55.
+
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--61
+
+ []
+
+<./../output/volumeByCond.png, id=17, 867.24pt x 722.7pt>
+File: ./../output/volumeByCond.png Graphic file (type png)
+
+<use ./../output/volumeByCond.png>
+Package pdftex.def Info: ./../output/volumeByCond.png used on input line 64.
+(pdftex.def)             Requested size: 341.43306pt x 284.53154pt.
+ [3 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outp
+ut/volumeByCondCHX.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
+
+ []
+
+[4 <C:/Users/tcho/Dropbox/Project - Platform Competition/Code/DepthVolume/outpu
+t/volumeByCond.png>]
 ("C:\Users\tcho\Dropbox\Project - Platform Competition\Code\DepthVolume\tex\CHX
 Note.aux") ) 
 Here is how much of TeX's memory you used:
- 1201 strings out of 493921
- 16137 string characters out of 3147286
- 66321 words of memory out of 3000000
- 4530 multiletter control sequences out of 15000+200000
+ 1207 strings out of 493921
+ 16379 string characters out of 3147286
+ 74329 words of memory out of 3000000
+ 4535 multiletter control sequences out of 15000+200000
  7587 words of font info for 27 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,8n,19p,531b,215s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,19p,726b,217s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.
 pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fi
@@ -168,9 +229,9 @@ les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmr8.pfb>
-Output written on CHXNote.pdf (2 pages, 100098 bytes).
+Output written on CHXNote.pdf (4 pages, 238067 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
+ 48 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

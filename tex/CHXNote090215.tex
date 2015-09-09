@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{float}
+\begin{document}
+
+\title{CHX: Special Cases}
+
+\maketitle
+\vspace{.5pc}
+
+\section{Derivatively Priced Trades}
+\subsection{Motivation}
+When plotting exchanges' volumes vs. depths for certain symbols on various days, we e observed suspiciously large volume-to-depth ratios in CHX, which exerted a heavy negative influence on the volume-to-depth regression slopes across exchanges.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/perDayScatterDollarLogExch}.png}
+\caption{Plot of the logged volume vs. logged depth of a sample's Symbol-Exchange-Date triples. The points are colored by exchange, and the blue signfiies CHX. The red circle highlights the CHX points, which we observe to have uncharacteristically high volumes for their depths.}
+\end{figure}
+
+We took a look at volumes in CHX and found that the bulk came from large-size trades labeled condition code 4. The following shows what a typical day in CHX might look like. Note that the trades with large SIZE values are also the only trades labeled with COND 4.\\
+
+\begin{tabular}{ | c| c | c | c | c | c | c | c| c|}
+\hline
+SYMBOL  &   DATE     &TIME &PRICE   &SIZE &COND &EX\\ \hline
+BAC &20140313 &13:29:22& 17.20    &100        &F  &M \\ \hline 
+BAC& 20140313& 13:59:23 &17.18 &104000     &4  &M \\ \hline 
+BAC& 20140313& 14:04:00 &17.18 &   500    &  F&  M \\ \hline 
+BAC& 20140313& 14:10:53 &17.16 &   100   &        F&  M \\ \hline 
+BAC& 20140313& 14:37:20 &17.15 &   500   &        F&  M \\ \hline 
+BAC& 20140313& 14:40:20 &17.15 &   600   &         @&  M \\ \hline 
+BAC& 20140313& 14:40:20 &17.15 &   100   &        @&  M \\ \hline 
+BAC& 20140313& 14:44:25 &17.16 &   400   &         F&  M \\ \hline 
+BAC& 20140313& 14:45:07 &17.18 &   100   &         F&  M \\ \hline 
+BAC& 20140313& 14:45:53 &17.14 &137500 &         4&  M \\ \hline 
+BAC& 20140313& 14:49:46 &17.13 &   900   &       F&  M \\ \hline 
+BAC& 20140313& 14:55:18 &17.13 &   217   &         @&  M \\ \hline 
+BAC& 20140313& 14:55:25 &17.13 &   383   &      F&  M\\
+ \hline 
+\end{tabular}\\
+
+After investigating the nature of trades with condition code 4, we decided to drop all such trades from the exchange competition analysis. By dropping this large chunk of volumes, we cut CHX's negative bias in regression slopes.\\
+
+\subsection{Definition}
+The TAQ spec\footnote{http://www.nyxdata.com/doc/224904} indicates that condition code 4 signifies a `Derivatively Priced' trade, with no further elaboration. Further research shows that such a trade's price `was not based, directly or
+indirectly, on the quoted price of the NMS stock at the time of execution'\footnote{https://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/611BTrade\_Matrix.pdf}\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands}; this information alone convinces me that such trades should be excluded from any analysis of the relationship between depth and volume.\\
+
+The fact that such trades are not considered to be a true "Last Sale''\footnote{http://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/utdfspecification.pdf} and are allowed outside of limit-up and limit-down prices\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands} strongly indicates that these trades' prices are not dictated by the BBO.\\
+
+As for what these trades are, an information memo\footnote{http://www.chx.com/\_posts/information-memos/2015/MR-15-04.pdf} on CHX Qualifed Contingent Trades may fit the description for Derivatively Priced trades. These are packages of trades that necessarily happen all-or-none with the price negotiated in aggregate. (It is also possible that activity in Exchange Traded Products\footnote{http://www.investopedia.com/terms/e/exchange-traded-products-etp.asp} make up these trades, perhaps when different symbols are negotiated at a package price and the individual trades semi-arbitrarily take on parts of the cost.)\\
+
+\subsection{Makeup of CHX Volume During Regular Hours}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/volumeByCondCHX}.png}
+\caption{Over the year 2014, 71.8\% of volume in dollars was labeled as Derivatively Priced.}
+\end{figure}
+
+\subsection{Day/Time of derivatively priced trades}
+We examine the daily trade volumes of derivatively priced trades at CHX for year 2014 to look for any particular patterns. In Figure 3, we see that there are no clear patterns of these trades aside from the two spikes happening on 01/30/2014 and 07/10/2014. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/Rplots/dailyVolumeChxCond4}.png}
+\caption{Daily Volume (dollars) of derivatively priced trades at CHX in 2014}
+\end{figure}
+
+We also examine intra-day derivatively priced trade volumes in 2014 by looking at average volume of trades occurring every 5-minute intervals. Once again, no clear pattern can be established from looking at Figure 4. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/Rplots/intradayVolumeChxCond4}.png}
+\caption{Average Intra-day volume (dollars) of derivately priced trades at CHX in 2014}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/Rplots/intradayVolumeChxCond4AM}.png}
+\caption{Average Intra-day volume (dollars) of derivately priced trades at CHX in 2014}
+\end{figure}
+
+
+\subsection{Particular to CHX}
+In 2014, trades with condition code 4 are a subset of trades with exchange codes for CHX and FINRA only. Before 2010, some other exchanges (particularly NASDAQ PSX) also had Derivatively Priced trades.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/volumeByCond}.png}
+\caption{Over 2014, over 70\% of CHX's regular trading volume (in dollars) was labeled with condition code 4. No other exchange contains such volume.}
+\label{fig:breakdown}
+\end{figure}
+
+\section{Tangent: ISO Orders}
+Figure \ref{fig:breakdown} also shows that 55.5\% of trades during regular hours are ISO orders.\\
+
+\end{document}

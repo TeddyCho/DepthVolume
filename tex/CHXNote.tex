@@ -10,41 +10,63 @@
 
 \section{Derivatively Priced Trades}
 \subsection{Motivation}
-Conclusion
-Volumes driven by condition code 4
-decision to drop condition code 4
-
-\subsection{Definition}
-sdaf\footnote{http://www.chx.com/\_posts/information-memos/2015/MR-15-04.pdf}
-
-\subsection{Particular to CHX}
-We investigate the CHX points which occur in the top right region (low depth, high volume).Cond Code 4 is ONLY on exchange CHX and FINRA
-excluding all cond code 4
-D has quotes! after a 1.5 months into 2014
-
-
-\subsection{Makeup of CHX Volume}
-
-\subsection{Patterns Checked}
-For one such outlier, BAC on CHX on 10-Jan-2014, we open the individual trades:
-[[TRADE DATA OF ALL CHX TRADES IN BAC ON JAN 10]]
-
-Condition code Y signifies `yellow flag' trading, which `is used to convey periods of time when a Market Center may be experiencing technical difficulties'\footnote{https://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/siptradeinbound.pdf}.
+When plotting exchanges' volumes vs. depths for certain symbols on various days, we observed suspiciously large volume-to-depth ratios in CHX, which exerted a heavy negative influence on the volume-to-depth regression slopes across exchanges.\\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=60mm]{{./../output/bacmsftjancount}.png}
-\includegraphics[width=60mm]{{./../output/bacmsftjan}.png}
-\caption{In January, although trades with condition code 4 constituted less than 15\% of the trades, over 95\% of volume held this condition code.}
+\includegraphics[width=120mm]{{./../output/perDayScatterDollarLogExch}.png}
+\caption{Plot of the logged volume vs. logged depth of a sample's Symbol-Exchange-Date triples. The points are colored by exchange, and the blue signfiies CHX. The red circle highlights the CHX points, which we observe to have uncharacteristically high volumes for their depths.}
 \end{figure}
 
-Most interestingly, we observe two large trades with condition code 4, indicating "Derivatively Priced" trades. Online literature suggests that activity in Exchange Traded Products\footnote{http://www.investopedia.com/terms/e/exchange-traded-products-etp.asp} largely make up these trades, perhaps when different symbols are negotiated at a package price and the individual trades semi-arbitrarily take on parts of the cost.
+We took a look at volumes in CHX and found that the bulk came from large-size trades labeled condition code 4. The following shows what a typical day in CHX might look like. Note that the trades with large SIZE values are also the only trades labeled with COND 4.\\
 
-The fact that such trades are not considered to be a true "Last Sale''\footnote{http://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/utdfspecification.pdf} and are allowed outside of limit-up and limit-down prices\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands} strongly indicates that these trades' prices are not dictated by the BBO.
+\begin{tabular}{ | c| c | c | c | c | c | c | c| c|}
+\hline
+SYMBOL  &   DATE     &TIME &PRICE   &SIZE &COND &EX\\ \hline
+BAC &20140313 &13:29:22& 17.20    &100        &F  &M \\ \hline 
+BAC& 20140313& 13:59:23 &17.18 &104000     &4  &M \\ \hline 
+BAC& 20140313& 14:04:00 &17.18 &   500    &  F&  M \\ \hline 
+BAC& 20140313& 14:10:53 &17.16 &   100   &        F&  M \\ \hline 
+BAC& 20140313& 14:37:20 &17.15 &   500   &        F&  M \\ \hline 
+BAC& 20140313& 14:40:20 &17.15 &   600   &         @&  M \\ \hline 
+BAC& 20140313& 14:40:20 &17.15 &   100   &        @&  M \\ \hline 
+BAC& 20140313& 14:44:25 &17.16 &   400   &         F&  M \\ \hline 
+BAC& 20140313& 14:45:07 &17.18 &   100   &         F&  M \\ \hline 
+BAC& 20140313& 14:45:53 &17.14 &137500 &         4&  M \\ \hline 
+BAC& 20140313& 14:49:46 &17.13 &   900   &       F&  M \\ \hline 
+BAC& 20140313& 14:55:18 &17.13 &   217   &         @&  M \\ \hline 
+BAC& 20140313& 14:55:25 &17.13 &   383   &      F&  M\\
+ \hline 
+\end{tabular}\\
 
-As a response, all trades with condition code 4 were filtered out.
+After investigating the nature of trades with condition code 4, we decided to drop all such trades from the exchange competition analysis. By dropping this large chunk of volumes, we cut CHX's negative bias in regression slopes.\\
 
-\section{ISO Orders}
-This flat relationship could be attributable to the CHX outlier which hovered in the low-depth/high-volume region. Filtering out Derivatively Priced trades remedied this flatness.\\
+\subsection{Definition}
+The TAQ spec\footnote{http://www.nyxdata.com/doc/224904} indicates that condition code 4 signifies a `Derivatively Priced' trade, with no further elaboration. Further research shows that such a trade's price `was not based, directly or
+indirectly, on the quoted price of the NMS stock at the time of execution'\footnote{https://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/611BTrade\_Matrix.pdf}\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands}; this information alone convinces me that such trades should be excluded from any analysis of the relationship between depth and volume.\\
+
+The fact that such trades are not considered to be a true "Last Sale''\footnote{http://www.nasdaqtrader.com/content/technicalsupport/specifications/utp/utdfspecification.pdf} and are allowed outside of limit-up and limit-down prices\footnote{http://www.finra.org/industry/trf/trade-report-modifiers-and-applicability-limit-uplimit-down-luld-price-bands} strongly indicates that these trades' prices are not dictated by the BBO.\\
+
+As for what these trades are, an information memo\footnote{http://www.chx.com/\_posts/information-memos/2015/MR-15-04.pdf} on CHX Qualifed Contingent Trades may fit the description for Derivatively Priced trades. These are packages of trades that necessarily happen all-or-none with the price negotiated in aggregate. (It is also possible that activity in Exchange Traded Products\footnote{http://www.investopedia.com/terms/e/exchange-traded-products-etp.asp} make up these trades, perhaps when different symbols are negotiated at a package price and the individual trades semi-arbitrarily take on parts of the cost.)\\
+
+\subsection{Makeup of CHX Volume During Regular Hours}
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/volumeByCondCHX}.png}
+\caption{Over the year 2014, 71.8\% of volume in dollars was labeled as Derivatively Priced.}
+\end{figure}
+
+\subsection{Particular to CHX}
+In 2014, trades with condition code 4 are a subset of trades with exchange codes for CHX and FINRA only. Before 2010, some other exchanges (particularly NASDAQ PSX) also had Derivatively Priced trades.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=120mm]{{./../output/volumeByCond}.png}
+\caption{Over 2014, over 70\% of CHX's regular trading volume (in dollars) was labeled with condition code 4. No other exchange contains such volume.}
+\label{fig:breakdown}
+\end{figure}
+
+\section{Tangent: ISO Orders}
+Figure \ref{fig:breakdown} also shows that 55.5\% of trades during regular hours are ISO orders.\\
 
 \end{document}
