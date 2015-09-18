@@ -220,6 +220,9 @@ aData <- runThroughFilter(aData, myIsValidExchangeShare, myOriginalSymbols)
 myCoeffDF <- createCoeffDF(aData)
 aByColumn = 'Volume and Price'
 aSuffix = 'Filtered for Exchange Share Greater Than 5'
+
+myCoeffDF$share <- factor(myCoeffDF$share,
+                          levels = c(">0",">10", ">5", ">15"))
 ggplot(myCoeffDF, aes(x=Beta, fill=priceBracket)) + 
   scale_x_continuous(limits = c(-5, 5)) +
   geom_histogram(aes(y=.1*..density..), alpha=.6, binwidth=.1) +
@@ -231,10 +234,29 @@ ggsave(file=paste(myOutputFolder, "BetaHistogramsBy", gsub(' ', '', aByColumn), 
        width = 12, height=10,dpi=100)
 
 #####
-myIsValid = aData$exchangeShare>0
+myIsValid = aData$exchangeShare>.15
 aData <- runThroughFilter(aData, myIsValid, myOriginalSymbols)
 
-myCoeffDF <- rbind(myCoeffDF, createCoeffDF(aData))
+myToAdd <- createCoeffDF(aData)
+myToAdd$share = '>15'
+myCoeffDF <- rbind(myCoeffDF, myToAdd)
+ggplot(myCoeffDF, aes(x=Beta, fill=share)) + 
+  scale_x_continuous(limits = c(-5, 5)) +
+  geom_histogram(aes(y=.1*..density..), alpha=.6, binwidth=.1) +
+  geom_vline(aes(xintercept=1), colour = "green") + 
+  ggtitle(paste('Histograms of Betas For Different ', 'Share', ' Buckets', sep='')) +
+  facet_wrap(~share, ncol=2, scales="free") + 
+  guides(fill=FALSE)
+ggsave(file=paste(myOutputFolder, "BetaHistogramsBy", 'Share', '.png', sep=""), 
+       width = 12, height=10,dpi=100)
+myBetaDF <- data.frame(share = unique(myCoeffDF$share),
+                       meanBetas = unlist(lapply(unique(myCoeffDF$share),
+                                                 function(x) mean(myCoeffDF$Beta[myCoeffDF[,'share']==x], na.rm=TRUE))))
+
+ggplot(myBetaDF, aes(x=share, y=meanBetas, group=1)) + 
+  geom_point() +  geom_line() +
+  ggtitle(paste('Mean Betas For Different ', 'Share', ' Buckets', sep=''))
+ggsave(file=paste(myOutputFolder, "BetaMeansBy", 'Share', '.png', sep=""), width = 12, height=10,dpi=100)
 
 myRawData = myRawData[!(myRawData$EX %in% c("D")),]
 mySymbols = unique(myRawData$SYMBOL)
